@@ -1,3 +1,4 @@
+ import { toast } from 'react-toastify';
 import BannerImg from "../../assets/BannerImg.png";
 import BannerBg from "../../assets/BannerBg.jpg";
 
@@ -109,38 +110,96 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="mt-24 mb-10 px-6 lg:px-12 max-w-[1200px] mx-auto">
+        <section className="mt-24 px-6 lg:px-12 max-w-[1200px] mx-auto">
           <div className="bg-white rounded-3xl shadow-md p-10 lg:p-14">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">Contact Us</h2>
 
             <p className="text-gray-600 max-w-2xl mb-10">
-              Have questions, need assistance, or want to learn more about
-              BloodCare? Our team is here to help. Reach out to us through any
-              of the channels below.
+              Have a question, need help, or want to share feedback? Reach out
+              using the form below or through our contact details.
             </p>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-              <div className="flex flex-col gap-2">
-                <h4 className="text-xl font-semibold">Email</h4>
-                <p className="text-gray-700">support@bloodcare.org</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <div className="space-y-8">
+                <div>
+                  <h4 className="text-xl font-semibold">Email</h4>
+                  <p className="text-gray-700">support@bloodcare.org</p>
+                </div>
+
+                <div>
+                  <h4 className="text-xl font-semibold">Phone</h4>
+                  <p className="text-gray-700">+1 (555) 238-9041</p>
+                </div>
+
+                <div>
+                  <h4 className="text-xl font-semibold">Office</h4>
+                  <p className="text-gray-700">
+                    14 Crescent Avenue, <br />
+                    Redwood City, CA 94063
+                  </p>
+                </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <h4 className="text-xl font-semibold">Phone</h4>
-                <p className="text-gray-700">+1 (555) 238-9041</p>
-              </div>
+              <form className="space-y-6" onSubmit={(e) => {
+                  e.preventDefault();
+                  toast.success("Your message has been sent. Thanks for connecting with us.");
+                  e.target.reset();
+              }}>
+                <div>
+                  <label className="block text-gray-800 mb-1 font-medium">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                    placeholder="Enter your full name"
+                    required
+                  />
+                </div>
 
-              <div className="flex flex-col gap-2">
-                <h4 className="text-xl font-semibold">Office</h4>
-                <p className="text-gray-700">
-                  14 Crescent Avenue,
-                  <br />
-                  Redwood City, CA 94063
-                </p>
-              </div>
+                <div>
+                  <label className="block text-gray-800 mb-1 font-medium">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                    placeholder="yourname@example.com"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-800 mb-1 font-medium">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                    placeholder="How can we help you?"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-800 mb-1 font-medium">
+                    Message
+                  </label>
+                  <textarea
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 h-32 resize-none outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                    placeholder="Write your message..."
+                    required
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  className="primary-btn w-full"
+                >
+                  Send Message
+                </button>
+              </form>
             </div>
-
-            <div className="my-10 h-px bg-gray-200"></div>
           </div>
         </section>
       </div>
