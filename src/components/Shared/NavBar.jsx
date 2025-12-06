@@ -37,7 +37,7 @@ const NavBar = () => {
                     <li><NavLink to="/funding">Funding</NavLink></li>
                 </ul>
 
-                <button className='primary-btn hidden lg:flex'>Login</button>
+                <button className='primary-btn hidden lg:flex' onClick={() => navigate("/login")}>Login</button>
 
                 <div
                     className='text-(--primary-color) lg:hidden flex'
@@ -49,7 +49,7 @@ const NavBar = () => {
 
             {menuOpen && (
                 <div className="lg:hidden flex flex-col items-center fixed top-32 left-4 md:left-12 right-4 md:right-12 bg-white p-6 rounded-3xl shadow-lg z-30">
-                    <NavItems close={() => setMenuOpen(false)} />
+                    <NavItems close={() => {setMenuOpen(false); navigate("/login")}} />
                 </div>
             )}
         </>

@@ -3,6 +3,9 @@ import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
 import DonationRequest from "../pages/DonationRequest";
 import Funding from "../pages/Funding";
+import Login from "../pages/Auth/Login";
+import Register from "../pages/Auth/Register";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
 
 export const routes = createBrowserRouter([
     {
@@ -22,5 +25,8 @@ export const routes = createBrowserRouter([
                 Component: Funding
             }
         ]
-    }
+    },
+    { path: "/login", Component: Login },
+    { path: "/register", Component: Register },
+    { path: "/forgot-password", Component: ForgotPassword }
 ]);
