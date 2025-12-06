@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
+import DonationRequest from "../pages/DonationRequest";
+import Funding from "../pages/Funding";
 
 export const routes = createBrowserRouter([
     {
@@ -10,6 +12,14 @@ export const routes = createBrowserRouter([
             {
                 index: true,
                 Component: Home
+            },
+            {
+                path: "/donation-request",
+                Component: DonationRequest
+            },
+            {
+                path: "/funding",
+                Component: Funding
             }
         ]
     }
