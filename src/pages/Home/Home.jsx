@@ -13,7 +13,7 @@ const Home = () => {
       >
         <div className="absolute top-0 left-0 w-full h-full bg-[#ffffffea] backdrop-blur-[2px] z-10"></div>
 
-        <div className="flex flex-col xl:items-start items-center z-20">
+        <div className="flex flex-col xl:items-start items-center z-10">
           <div className="text-5xl md:text-7xl font-bold text-center xl:text-start xl:text-6xl">
             <h1>
               DONATE <span className="text-(--primary-color)">BLOOD</span>

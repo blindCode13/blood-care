@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import axios from 'axios';
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
 import DonationRequest from "../pages/DonationRequest";
@@ -27,6 +28,10 @@ export const routes = createBrowserRouter([
         ]
     },
     { path: "/login", Component: Login },
-    { path: "/register", Component: Register },
+    { 
+        path: "/register",
+        Component: Register,
+        loader: () => axios("../../src/data/location.json").then(res => res.data)
+    },
     { path: "/forgot-password", Component: ForgotPassword }
 ]);
