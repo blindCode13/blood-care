@@ -31,8 +31,7 @@ const LogoutConfirmation = ({setModalShow, logOut}) => {
 							() => {
 								logOut().then(() => {
 									toast.success("Successfully logged out.");
-									navigate("/");
-								}).catch(err => toast.error(err.message))
+								}).catch(err => toast.error(err.message)).finally(() => navigate("/"))
 							}
 					}>
 						Log Out

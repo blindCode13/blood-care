@@ -2,9 +2,11 @@
 import BannerImg from "../../assets/BannerImg.png";
 import BannerBg from "../../assets/BannerBg.jpg";
 import { useNavigate } from 'react-router';
+import useAuth from '../../hooks/useAuth';
 
 const Home = () => {
   const navigate = useNavigate();
+  const {user} = useAuth();
   return (
     <div>
       <div
@@ -27,7 +29,9 @@ const Home = () => {
             tomorrow, a reminder that every drop truly matters.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="primary-btn" onClick={() => navigate("/register")}>Join as a donor</button>
+            {
+              !user && <button className="primary-btn" onClick={() => navigate("/register")}>Join as a donor</button>
+            }
             <button className="secondery-btn">Search Donors</button>
           </div>
         </div>

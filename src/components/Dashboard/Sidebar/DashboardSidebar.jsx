@@ -1,19 +1,28 @@
 import { FiGrid, FiUsers, FiFileText, FiDollarSign, FiLogOut } from "react-icons/fi";
-import { FaUser } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router";
 import Logo from '../../../assets/Logo.png';
+import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import LogoutConfirmation from "../../Modals/LogoutConfirmation";
 
 const DashboardSidebar = () => {
     const navigate = useNavigate();
+    const [modalShow, setModalShow] = useState(false);
+    const {logOut} = useAuth();
 
     return (
+        <>
+        {
+            modalShow && <LogoutConfirmation setModalShow={setModalShow} logOut={logOut}></LogoutConfirmation>
+        }
         <div className="
             h-screen bg-white shadow-lg flex flex-col fixed left-0 top-0 z-50
             w-20 md:w-64
         ">
             
             <div
-                className="flex flex-col md:flex-row items-center justify-center md:justify-start
+                className="flex flex-col md:flex-row items-center hover:-rotate-2 hover:scale-110 justify-center md:justify-start
                 gap-2 cursor-pointer transition mt-6 md:pl-6"
                 onClick={() => navigate("/")}
             >
@@ -72,13 +81,14 @@ const DashboardSidebar = () => {
                         ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
                     }
                 >
-                    <FaUser size={22} />
+                    <FaRegUser size={22} />
                     <span className="hidden md:block">Profile</span>
                 </NavLink>
 
                 <button
                     className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer
                     hover:bg-(--primary-color)/10 w-full text-left justify-center md:justify-start"
+                    onClick={() => setModalShow(true)}
                 >
                     <FiLogOut size={22} />
                     <span className="hidden md:block">Logout</span>
@@ -86,6 +96,7 @@ const DashboardSidebar = () => {
 
             </div>
         </div>
+        </>
     );
 };
 

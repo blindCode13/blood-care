@@ -1,69 +1,35 @@
-import DashboardNav from "../Shared/DashboardNav";
-import {
-	FiEdit2,
-	FiTrash2,
-	FiEye,
-	FiCheck,
-	FiX
-} from "react-icons/fi";
-import { Link } from "react-router";
-import useAuth from "../../../hooks/useAuth";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Loading from "../../Shared/Loading";
+import Loading from "../components/Shared/Loading";
+import { useNavigate } from "react-router";
 
-const DashboardHome = () => {
-	const { user } = useAuth();
+const DonationRequests = () => {
+	const navigate = useNavigate();
 	const {
 		data: requests = {},
 		isLoading
 	} = useQuery({
-		queryKey: ['requesterEmail'],
+		queryKey: ['donationStatus'],
 		queryFn: async () => {
-			const result = await axios(`${import.meta.env.VITE_SERVER_API_URL
-				}/donation-requests?email=${user.email
-				}&statusFilter=pending`);
+			const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?statusFilter=pending`);
 			return result.data;
 		}
 	});
 
-	if (isLoading)
-		return <Loading />
-
-
-
-	const recent = requests.slice(0, 3);
+	if (isLoading) return <Loading />
 
 	return (
 		<div className="space-y-10">
-			<DashboardNav title="Overview" />
-
-			<div>
-				<h2 className="text-3xl font-semibold">
-					Welcome,{" "}
-					<span className="text-(--primary-color)">
-						{
-							user?.displayName || user?.name
-						} </span>
-				</h2>
-				<p className="text-gray-600 mt-1">
-					Get a overview of your donation activities and requests here.
-				</p>
-			</div>
-
 			{
-				recent.length === 0 && <h1>Nothing to show.</h1>
+				requests.length === 0 && <h1>Nothing to show.</h1>
 			}
 
 			{
-				recent.length > 0 && (
+				requests.length > 0 && (
 					<div className="space-y-4">
-						<h3 className="text-xl font-semibold">
-							Your Recent Donation Requests
-						</h3>
-
 						<div className="hidden xl:block">
-							<div className="grid grid-cols-8 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase">
+							<div className="grid grid-cols-8 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
 								<span>Recipient</span>
 								<span>Location</span>
 								<span>Date</span>
@@ -76,7 +42,7 @@ const DashboardHome = () => {
 
 							<div className="space-y-4">
 								{
-									recent.map((req) => (
+									requests.map((req) => (
 										<div key={
 											req._id
 										}
@@ -117,39 +83,7 @@ const DashboardHome = () => {
 													req.donationStatus
 												} </span>
 
-											<div className="flex items-center gap-3">
-												<Link to={
-													`/dashboard/edit-request/${req._id
-													}`
-												}
-													className="text-blue-600 hover:text-blue-800">
-													<FiEdit2 size={20} />
-												</Link>
-
-												<button className="text-red-600 hover:text-red-800">
-													<FiTrash2 size={20} />
-												</button>
-
-												<Link to={
-													`/dashboard/request/${req._id
-													}`
-												}
-													className="text-gray-700 hover:text-black">
-													<FiEye size={22} />
-												</Link>
-
-												{
-													req.status === "inprogress" && (
-														<>
-															<button className="text-green-600 hover:text-green-800">
-																<FiCheck size={22} />
-															</button>
-															<button className="text-red-600 hover:text-red-800">
-																<FiX size={22} />
-															</button>
-														</>
-													)
-												} </div>
+											<button className="primary-btn" onClick={() => navigate(`/donation-requests/${req._id}`)}>View</button>
 										</div>
 									))
 								} </div>
@@ -157,7 +91,7 @@ const DashboardHome = () => {
 
 						<div className="xl:hidden space-y-5">
 							{
-								recent.map((req) => (
+								requests.map((req) => (
 									<div key={
 										req._id
 									}
@@ -229,58 +163,16 @@ const DashboardHome = () => {
 												} </span>
 										</div>
 
-										<div className="
-																				        flex items-center justify-between
-																				        mt-4 pt-3 border-t border-gray-200
-																				      ">
-
-											<div className="flex items-center gap-4 text-gray-600">
-												<Link to={
-													`/dashboard/edit-request/${req._id
-													}`
-												}
-													className="text-blue-600 hover:text-blue-800">
-													<FiEdit2 size={18} />
-												</Link>
-
-												<button className="text-red-600 hover:text-red-700">
-													<FiTrash2 size={18} />
-												</button>
-
-												<Link to={
-													`/dashboard/request/${req._id
-													}`
-												}
-													className="hover:text-black">
-													<FiEye size={18} />
-												</Link>
-
-												{
-													req.donationStatus === "inprogress" && (
-														<>
-															<button className="text-green-600 hover:text-green-700">
-																<FiCheck size={18} />
-															</button>
-															<button className="text-red-600 hover:text-red-700">
-																<FiX size={18} />
-															</button>
-														</>
-													)
-												} </div>
+										<div className="flex mt-4 pt-3 border-t border-gray-200">
+											<button className="primary-btn" onClick={() => navigate(`/donation-requests/${req._id}`)}>View</button>
 										</div>
 									</div>
 								))
 							} </div>
-
-						<div className="text-center pt-3">
-							<Link to="/dashboard/my-donation-requests" className="primary-btn px-6 py-3 inline-block">
-								View My All Requests
-							</Link>
-						</div>
 					</div>
 				)
 			} </div>
 	);
 };
 
-export default DashboardHome;
+export default DonationRequests;

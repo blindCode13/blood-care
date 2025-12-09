@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import axios from 'axios';
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
-import DonationRequest from "../pages/DonationRequest";
 import Funding from "../pages/Funding";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
@@ -13,6 +12,8 @@ import PrivateRoute from "./PrivateRoute";
 import RequestDonation from "../components/Dashboard/Donor/RequestDonation";
 import DashboardHome from "../components/Dashboard/Donor/DashboardHome";
 import AllDonationReq from "../components/Dashboard/Donor/AllDonationReq";
+import DonationRequests from "../pages/DonationRequests";
+import DonationRequestDetails from "../components/DonationRequestDetails";
 
 export const routes = createBrowserRouter([
     {
@@ -24,8 +25,13 @@ export const routes = createBrowserRouter([
                 Component: Home
             },
             {
-                path: "/donation-request",
-                Component: DonationRequest
+                path: "/donation-requests",
+                Component: DonationRequests
+            },
+            {
+                path: "/donation-requests/:id",
+                loader: ({params}) => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/${params.id}`).then(res => res.data),
+                element: <PrivateRoute><DonationRequestDetails /></PrivateRoute>
             },
             {
                 path: "/funding",
@@ -48,8 +54,7 @@ export const routes = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: DashboardHome,
-                loader: () => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?email=admin@gmail.com&statusFilter=pending`).then(res => res.data)
+                Component: DashboardHome
             },
             {
                 path: "/dashboard/create-donation-request",
@@ -58,8 +63,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/dashboard/my-donation-requests",
-                Component: AllDonationReq,
-                loader: () => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?email=admin@gmail.com`).then(res => res.data)
+                Component: AllDonationReq
             },
             {
                 path: "/dashboard/profile",

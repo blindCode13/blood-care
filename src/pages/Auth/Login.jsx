@@ -24,8 +24,8 @@ const Login = () => {
 
     try {
       await logIn(email, password);
-      await saveOrUpdateUser({email});
       toast.success("Successfully logged in");
+      await saveOrUpdateUser({email});
     }
     catch (err) {
       toast.error(err.message);
@@ -36,7 +36,9 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="bg-white shadow-lg rounded-3xl px-12 py-10 w-full max-w-[500px] relative">
-        <span className="absolute top-6 left-6 text-(--primary-color) font-medium cursor-pointer hover:underline flex items-center gap-2" onClick={() => navigate(-1)}>
+        <span className="absolute top-6 left-6 text-(--primary-color) font-medium cursor-pointer hover:underline flex items-center gap-2" onClick={() => {
+          location.state ? navigate(-3) : navigate(-1)
+        }}>
             <GoArrowLeft size={26}/>
                 Go Back
         </span>
