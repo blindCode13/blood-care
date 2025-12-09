@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { GoArrowLeft } from "react-icons/go";
@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Loading from "../../components/Shared/Loading";
+import { saveOrUpdateUser } from "../../utils/utils";
 
 const Login = () => {
   const {user, loading, setLoading, logIn} = useAuth();
@@ -23,6 +24,7 @@ const Login = () => {
 
     try {
       await logIn(email, password);
+      await saveOrUpdateUser({email});
       toast.success("Successfully logged in");
     }
     catch (err) {

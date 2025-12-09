@@ -4,9 +4,8 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { GoArrowLeft } from "react-icons/go";
-import { IoWarning } from "react-icons/io5";
 import useAuth from "../../hooks/useAuth";
-import { imageUpload } from "../../utils/utils";
+import { imageUpload, saveOrUpdateUser } from "../../utils/utils";
 import Loading from "../../components/Shared/Loading";
 
 
@@ -37,7 +36,15 @@ const Register = () => {
     if (!selectedDistrict || !selectedUpazila) setTriggerError(true);
     if (selectedDistrict && selectedUpazila) {
       setTriggerError(false);
-      const {name, email, bloodGroup, password} = data
+      const {name, email, bloodGroup, password} = data;
+
+      const userData = {
+        name,
+        email,
+        bloodGroup,
+        district: selectedDistrict,
+        upazila: selectedUpazila
+      };
 
       try {
         setIsProcessing(true);
@@ -49,6 +56,9 @@ const Register = () => {
         }
         await createUser(email, password);
         await updateUserProfile(name, imageURL);
+        
+        userData.avatar = imageURL;
+        await saveOrUpdateUser(userData);
 
         toast.success("Your account has been registered.");
       }
@@ -105,7 +115,7 @@ const Register = () => {
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer bg-white"
                 onClick={() => document.getElementById("avatarInput").click()}
               >
-                <span className="text-gray-700 text-sm">{avatarName}</span>
+                <span className="text-gray-700 text-sm line-clamp-1">{avatarName}</span>
 
                 <span
                   className="px-3 py-1 rounded-lg text-sm text-white"
@@ -134,7 +144,7 @@ const Register = () => {
             <div>
               <label className="block mb-1 font-medium text-gray-800">Blood Group</label>
               <select
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color) cursor-pointer"
                 {...register('bloodGroup')}
               >
                 <option>A+</option>

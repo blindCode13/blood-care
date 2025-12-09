@@ -7,6 +7,12 @@ import Funding from "../pages/Funding";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Profile from "../components/Dashboard/Shared/Profile";
+import PrivateRoute from "./PrivateRoute";
+import RequestDonation from "../components/Dashboard/Donor/RequestDonation";
+import DashboardHome from "../components/Dashboard/Donor/DashboardHome";
+import AllDonationReq from "../components/Dashboard/Donor/AllDonationReq";
 
 export const routes = createBrowserRouter([
     {
@@ -27,11 +33,38 @@ export const routes = createBrowserRouter([
             }
         ]
     },
+
     { path: "/login", Component: Login },
     { 
         path: "/register",
         Component: Register,
         loader: () => axios("../../src/data/location.json").then(res => res.data)
     },
-    { path: "/forgot-password", Component: ForgotPassword }
+    { path: "/forgot-password", Component: ForgotPassword },
+
+    {
+        path: "/dashboard",
+        element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+        children: [
+            {
+                index: true,
+                Component: DashboardHome,
+                loader: () => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?email=admin@gmail.com&statusFilter=pending`).then(res => res.data)
+            },
+            {
+                path: "/dashboard/create-donation-request",
+                Component: RequestDonation,
+                loader: () => axios("../../src/data/location.json").then(res => res.data)
+            },
+            {
+                path: "/dashboard/my-donation-requests",
+                Component: AllDonationReq,
+                loader: () => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?email=admin@gmail.com`).then(res => res.data)
+            },
+            {
+                path: "/dashboard/profile",
+                Component: Profile
+            }
+        ]
+    }
 ]);

@@ -23,7 +23,7 @@ const NavBar = () => {
             <nav className='mt-6 px-8 py-5 flex items-center justify-between bg-white rounded-3xl fixed left-4 md:left-12 right-4 md:right-12 max-w-[1824px] mx-auto shadow-sm z-30'>
 
                 {
-                    dropdown && <ProfileDropdown userData={user} setDropDown={setDropdown} setModalShow={setModalShow}></ProfileDropdown>
+                    dropdown && <ProfileDropdown userData={user} setDropDown={setDropdown} setModalShow={setModalShow} navigate={navigate}></ProfileDropdown>
                 }
                 {
                     modalShow && <LogoutConfirmation setModalShow={setModalShow} logOut={logOut}></LogoutConfirmation>
@@ -101,12 +101,12 @@ const ProfileDropdown = ({setDropDown, userData, setModalShow, navigate}) => {
       </div>
 
       <div className="py-2">
-        <button className="w-full flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-(--primary-color)/10 transition cursor-pointer" onClick={() => {navigate("/my-activities"); setDropDown(false)}}>
+        <button className="w-full flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-(--primary-color)/10 transition cursor-pointer" onClick={() => {navigate("/dashboard"); setDropDown(false)}}>
           <MdSpaceDashboard className="text-(--primary-color)" size={20}/>
           Dashboard
         </button>
 
-        <button className="w-full flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-(--primary-color)/10 transition cursor-pointer" onClick={() => {navigate("/profile"); setDropDown(false)}}>
+        <button className="w-full flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-(--primary-color)/10 transition cursor-pointer" onClick={() => {navigate("/dashboard/profile"); setDropDown(false)}}>
           <FaUser className="text-(--primary-color)" size={20}/>
           Profile
         </button>
