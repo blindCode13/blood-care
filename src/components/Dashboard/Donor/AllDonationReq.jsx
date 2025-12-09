@@ -6,12 +6,16 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../../Shared/Loading";
 import { useState } from "react";
+import DeleteConfirmation from "../../Modals/DeleteConfirmation";
 
 const DashboardHome = () => {
   const { user } = useAuth();
+  const [modalShow, setModalShow] = useState(false);
+	const [processingCount, setProcessingCount] = useState(0);
+	const [currentDeleteReq, setCurrentDeleteReq] = useState("");
   const [filterOption, setFilterOption] = useState("");
   const { data: requests = {}, isLoading } = useQuery({
-    queryKey: ["requesterEmail", "donationStatus", filterOption],
+    queryKey: ["requesterEmail", "donationStatus", filterOption, processingCount],
     queryFn: async () => {
       const result = await axios(
         `${import.meta.env.VITE_SERVER_API_URL}/donation-requests?email=${
@@ -36,6 +40,10 @@ const DashboardHome = () => {
   };
 
   return (
+    <>
+      {
+				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount}/>
+			}
     <div className="space-y-10">
       <DashboardNav title="My Donation Requests" />{" "}
       <div className="mt-20">
@@ -105,16 +113,19 @@ const DashboardHome = () => {
 
                   <div className="flex items-center gap-3">
                     <Link
-                      to={`/dashboard/edit-request/${req._id}`}
+                      to={`/donation-requests/edit/${req._id}`}
                       className="text-blue-600 hover:text-blue-800"
                     >
                       <FiEdit2 size={20} />
                     </Link>
-                    <button className="text-red-600 hover:text-red-800">
+                    <button className="text-red-600 hover:text-red-800 cursor-pointer" onClick={() => {
+													setModalShow(true);
+													setCurrentDeleteReq(req._id);
+												}}>
                       <FiTrash2 size={20} />
                     </button>
                     <Link
-                      to={`/dashboard/request/${req._id}`}
+                      to={`/donation-requests/${req._id}`}
                       className="text-gray-700 hover:text-black"
                     >
                       <FiEye size={22} />
@@ -212,16 +223,19 @@ const DashboardHome = () => {
                 >
                   <div className="flex items-center gap-4 text-gray-600">
                     <Link
-                      to={`/dashboard/edit-request/${req._id}`}
+                      to={`/donation-requests/edit/${req._id}`}
                       className="text-blue-600 hover:text-blue-800"
                     >
                       <FiEdit2 size={18} />
                     </Link>
-                    <button className="text-red-600 hover:text-red-700">
+                    <button className="text-red-600 hover:text-red-700 cursor-pointer" onClick={() => {
+													setModalShow(true);
+													setCurrentDeleteReq(req._id);
+												}}>
                       <FiTrash2 size={18} />
                     </button>
                     <Link
-                      to={`/dashboard/request/${req._id}`}
+                      to={`/donation-requests/${req._id}`}
                       className="hover:text-black"
                     >
                       <FiEye size={18} />
@@ -244,6 +258,7 @@ const DashboardHome = () => {
         </div>
       )}{" "}
     </div>
+    </>
   );
 };
 

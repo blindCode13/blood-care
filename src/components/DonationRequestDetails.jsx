@@ -7,6 +7,7 @@ import {
   FiUser,
   FiMail,
 } from "react-icons/fi";
+import { TbProgressHelp } from "react-icons/tb";
 import { FaRegHospital } from "react-icons/fa";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -16,6 +17,19 @@ const DonationRequestDetails = () => {
   const {user} = useAuth();
   const req = useLoaderData();
   const navigate = useNavigate();
+
+  const statusStyle = (status) => {
+    switch (status) {
+      case "pending":
+        return "bg-yellow-100 text-yellow-700";
+      case "inprogress":
+        return "bg-blue-100 text-blue-700";
+      case "done":
+        return "bg-green-100 text-green-700";
+      default:
+        return "bg-red-100 text-red-700";
+    }
+  };
 
   return (
     <div className="space-y-10">
@@ -63,6 +77,16 @@ const DonationRequestDetails = () => {
                 <p className="text-lg font-semibold">{req.fullAddress}</p>
               </div>
             </div>
+
+            <div className="flex items-center gap-3">
+              <div className={`p-2 rounded-xl bg-(--primary-color)/10 ${statusStyle(req.donationStatus)}`}>
+                <TbProgressHelp size={24} />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Donation Status</p>
+                <p className="text-lg font-semibold">{req.donationStatus}</p>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-6">
@@ -105,6 +129,21 @@ const DonationRequestDetails = () => {
                 <p className="font-semibold">{req.requesterName}</p>
                 <p className="text-gray-600 text-sm flex gap-1 items-center">
                   <FiMail size={14} /> {req.requesterEmail}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-(--primary-color)/10">
+                <FiUser className="text-(--primary-color)" size={24} />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Donor info</p>
+                <p className="font-semibold">{req.donorName ? req.donorName : "..."}</p>
+                <p className="text-gray-600 text-sm flex gap-1 items-center">
+                  {
+                    req.donorEmail ? <><FiMail size={14} /> {req.donorEmail}</> : "..."
+                  }
                 </p>
               </div>
             </div>

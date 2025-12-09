@@ -14,6 +14,7 @@ import DashboardHome from "../components/Dashboard/Donor/DashboardHome";
 import AllDonationReq from "../components/Dashboard/Donor/AllDonationReq";
 import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../components/DonationRequestDetails";
+import EditDonationRequest from "../components/EditDonationRequest";
 
 export const routes = createBrowserRouter([
     {
@@ -32,6 +33,11 @@ export const routes = createBrowserRouter([
                 path: "/donation-requests/:id",
                 loader: ({params}) => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/${params.id}`).then(res => res.data),
                 element: <PrivateRoute><DonationRequestDetails /></PrivateRoute>
+            },
+            {
+                path: "/donation-requests/edit/:id",
+                loader: () => axios("../../src/data/location.json").then(res => res.data),
+                element: <PrivateRoute><EditDonationRequest /></PrivateRoute>
             },
             {
                 path: "/funding",

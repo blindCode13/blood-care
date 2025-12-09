@@ -1,27 +1,29 @@
 import { useState } from 'react';
-import DashboardNav from '../Shared/DashboardNav';
-import useAuth from '../../../hooks/useAuth';
-import { useLoaderData } from 'react-router';
+import useAuth from '../hooks/useAuth';
+import { useLoaderData, useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import Loading from '../../Shared/Loading';
+import Loading from '../components/Shared/Loading';
 import { useQuery } from '@tanstack/react-query';
+import { GoArrowLeft } from 'react-icons/go';
 
-const RequestDonation = () => {
+const EditDonationRequest = () => {
+  const {id} = useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const data = useLoaderData().sort((a, b) => a.district.localeCompare(b.district));
 
-const { data: userData = {}, isLoading } = useQuery({
-    queryKey: ['email'],
+  const { data: request = {}, isLoading } = useQuery({
+    queryKey: [id],
     queryFn: async () => {
-      const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/users/check-status/${user.email}`);
+      const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/${id}`);
       return result.data;
     },
   });
 
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [selectedUpazila, setSelectedUpazila] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState(request.recipientDistrict);
+  const [selectedUpazila, setSelectedUpazila] = useState(request.recipientUpazila);
   const [triggerError, setTriggerError] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -34,13 +36,14 @@ const { data: userData = {}, isLoading } = useQuery({
       setTriggerError(true);
       return;
     }
+    if (request.donationStatus !== 'pending') {
+        return toast.error("Can't update this donation request");
+    }
 
     setIsProcessing(true);
     setTriggerError(false);
 
-    const requestData = {
-      requesterName: user?.displayName,
-      requesterEmail: user?.email,
+    const updateReq = {
       recipientName: formData.recipientName,
       recipientDistrict: selectedDistrict,
       recipientUpazila: selectedUpazila,
@@ -53,8 +56,8 @@ const { data: userData = {}, isLoading } = useQuery({
     };
 
     try {
-        await axios.post(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests`, requestData);
-        toast.success("Donation requested");
+        await axios.patch(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/edit/${id}`, updateReq);
+        toast.success("Successfully updated donation request");
         reset();
         setSelectedDistrict("");
         setSelectedUpazila("");
@@ -67,16 +70,15 @@ const { data: userData = {}, isLoading } = useQuery({
 
   return (
     <>
-      <DashboardNav title="Request Donation" />
-
-      {
-        userData.status !== 'active' ? <h1 className='text-red-500 mt-10'>You can't create any donation request as your account is  blocked. Contact with the admin.</h1> : 
 
       <div className="min-h-screen flex items-center justify-center py-12">
         <div className="bg-white shadow-lg rounded-3xl px-12 py-10 w-full max-w-[700px] relative">
+            <span className="absolute top-6 left-6 text-(--primary-color) font-medium cursor-pointer hover:underline flex items-center gap-2" onClick={() => navigate(-1)}>
+                        <GoArrowLeft size={26}/>Go Back
+            </span>
 
-          <h2 className="text-3xl font-bold mt-2 mb-8 text-center">
-            Fill out this form
+          <h2 className="text-3xl font-bold mt-6 mb-8 text-center">
+            Edit Donation Request form
           </h2>
 
           <form className="space-y-6" onSubmit={handleSubmit(formSubmit)}>
@@ -107,6 +109,7 @@ const { data: userData = {}, isLoading } = useQuery({
                 type="text"
                 className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
                 placeholder="Enter recipient name"
+                defaultValue={request.recipientName}
                 required
                 {...register("recipientName")}
               />
@@ -156,6 +159,7 @@ const { data: userData = {}, isLoading } = useQuery({
                   type="date"
                   className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
                   required
+                  defaultValue={request.donationDate}
                   {...register("donationDate")}
                 />
               </div>
@@ -166,6 +170,7 @@ const { data: userData = {}, isLoading } = useQuery({
                   type="time"
                   className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
                   required
+                  defaultValue={request.donationTime}
                   {...register("donationTime")}
                 />
               </div>
@@ -179,6 +184,7 @@ const { data: userData = {}, isLoading } = useQuery({
                 className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
                 placeholder="Hospital name"
                 required
+                defaultValue={request.hospitalName}
                 {...register("hospitalName")}
               />
             </div>
@@ -190,6 +196,7 @@ const { data: userData = {}, isLoading } = useQuery({
                 className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
                 placeholder="Full address"
                 required
+                defaultValue={request.fullAddress}
                 {...register("fullAddress")}
               />
             </div>
@@ -199,6 +206,7 @@ const { data: userData = {}, isLoading } = useQuery({
               <select
                 className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none cursor-pointer focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
                 {...register("bloodGroup")}
+                defaultValue={request.bloodGroup}
               >
                 <option>A+</option>
                 <option>A-</option>
@@ -217,17 +225,20 @@ const { data: userData = {}, isLoading } = useQuery({
                 placeholder="Explain why blood is needed"
                 className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none h-28 focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
                 {...register("requestMessage")}
+                defaultValue={request.requestMessage}
               ></textarea>
             </div>
 
-            <button type="submit" className="primary-btn w-full">
-              Submit Request
-            </button>
+            {
+                request.donationStatus === 'pending' ? <button type="submit" className="primary-btn w-full">
+                    Edit Request Data
+                </button> : 
+                <h1 className='text-red-500 text-center'>You can't update this donation request.</h1>
+            }
 
           </form>
         </div>
       </div>
-    }
     </>
   );
 };
@@ -271,4 +282,4 @@ const CustomDropdown = ({ label, options, selected, onSelect }) => {
   );
 };
 
-export default RequestDonation;
+export default EditDonationRequest;
