@@ -11,12 +11,19 @@ import { TbProgressHelp } from "react-icons/tb";
 import { FaRegHospital } from "react-icons/fa";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useLoaderData, useNavigate } from "react-router";
+import { useLoaderData, useNavigate, useRevalidator } from "react-router";
+import { useState } from "react";
+import DonationModal from "./Modals/DonationModal";
 
 const DonationRequestDetails = () => {
+  const [modalShow, setModalShow] = useState(false);
+  const [processingCount, setProcessingCount] = useState(0);
+  const revalidator = useRevalidator();
   const {user} = useAuth();
   const req = useLoaderData();
   const navigate = useNavigate();
+
+
 
   const statusStyle = (status) => {
     switch (status) {
@@ -32,6 +39,10 @@ const DonationRequestDetails = () => {
   };
 
   return (
+    <>
+      {
+				modalShow && <DonationModal req={req} user={user} setModalShow={setModalShow} setProcessingCount={setProcessingCount} processingCount={processingCount} revalidator={revalidator}/>
+			}
     <div className="space-y-10">
 
       <div className="bg-white rounded-3xl p-8 shadow-md border border-gray-200">
@@ -164,11 +175,12 @@ const DonationRequestDetails = () => {
         <div className="flex items-center gap-4 justify-center">
           <button className="secondery-btn flex items-center gap-1" onClick={() => navigate(-1)}><IoIosArrowRoundBack size={30}/>Go Back</button>
           {
-            req.donationStatus === "pending" && req.requesterEmail !== user.email && <button className="primary-btn">Donate Now</button>
+            req.donationStatus === "pending" && req.requesterEmail !== user.email && <button className="primary-btn" onClick={() => setModalShow(true)}>Donate</button>
           }
         </div>
 
     </div>
+    </>
   );
 };
 

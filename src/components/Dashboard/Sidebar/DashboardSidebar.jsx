@@ -1,4 +1,5 @@
-import { FiGrid, FiUsers, FiFileText, FiDollarSign, FiLogOut } from "react-icons/fi";
+import { FiGrid, FiUsers, FiFileText, FiLogOut } from "react-icons/fi";
+import { LuFileUser } from "react-icons/lu";
 import { FaRegUser } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router";
 import Logo from '../../../assets/Logo.png';
@@ -67,6 +68,18 @@ const DashboardSidebar = () => {
                 >
                     <FiFileText size={22} />
                     <span className="hidden md:block">Donation Requests</span>
+                </NavLink>
+
+                <NavLink
+                    to="/dashboard/my-donations"
+                    className={({ isActive }) =>
+                        `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
+                        justify-center md:justify-start
+                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                    }
+                >
+                    <LuFileUser size={22} />
+                    <span className="hidden md:block">My Donations</span>
                 </NavLink>
 
             </div>

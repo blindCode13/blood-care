@@ -3,9 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../components/Shared/Loading";
 import { useNavigate } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const DonationRequests = () => {
 	const navigate = useNavigate();
+	const {user} = useAuth();
 	const {
 		data: requests = {},
 		isLoading
@@ -46,7 +48,7 @@ const DonationRequests = () => {
 										<div key={
 											req._id
 										}
-											className="grid grid-cols-8 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5">
+											className={`grid grid-cols-8 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5 ${req.requesterEmail === user?.email ? 'border-l-8 border-amber-200' : ''}`}>
 											<span className="font-medium">
 												{
 													req.recipientName

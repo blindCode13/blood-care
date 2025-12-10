@@ -15,6 +15,8 @@ import AllDonationReq from "../components/Dashboard/Donor/AllDonationReq";
 import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../components/DonationRequestDetails";
 import EditDonationRequest from "../components/EditDonationRequest";
+import MyDonations from "../components/Dashboard/Donor/MyDonations";
+import Loading from "../components/Shared/Loading";
 
 export const routes = createBrowserRouter([
     {
@@ -32,6 +34,7 @@ export const routes = createBrowserRouter([
             {
                 path: "/donation-requests/:id",
                 loader: ({params}) => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/${params.id}`).then(res => res.data),
+                hydrateFallbackElement: <Loading />,
                 element: <PrivateRoute><DonationRequestDetails /></PrivateRoute>
             },
             {
@@ -70,6 +73,10 @@ export const routes = createBrowserRouter([
             {
                 path: "/dashboard/my-donation-requests",
                 Component: AllDonationReq
+            },
+            {
+                path: "/dashboard/my-donations",
+                Component: MyDonations
             },
             {
                 path: "/dashboard/profile",
