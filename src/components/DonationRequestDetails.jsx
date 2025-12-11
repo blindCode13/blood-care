@@ -15,16 +15,18 @@ import { useLoaderData, useNavigate, useRevalidator } from "react-router";
 import { useState } from "react";
 import DonationModal from "./Modals/DonationModal";
 import useRole from "../hooks/useRole";
+import Loading from "./Shared/Loading";
 
 const DonationRequestDetails = () => {
   const [modalShow, setModalShow] = useState(false);
   const [processingCount, setProcessingCount] = useState(0);
-  const role = useRole();
+  const [role, isRoleLoading] = useRole();
   const revalidator = useRevalidator();
   const {user} = useAuth();
   const req = useLoaderData();
   const navigate = useNavigate();
 
+  if (isRoleLoading) return <Loading />
 
 
   const statusStyle = (status) => {
@@ -177,7 +179,7 @@ const DonationRequestDetails = () => {
         <div className="flex items-center gap-4 justify-center">
           <button className="secondery-btn flex items-center gap-1" onClick={() => navigate(-1)}><IoIosArrowRoundBack size={30}/>Go Back</button>
           {
-            role !== 'admin' && req.donationStatus === "pending" && req.requesterEmail !== user.email && <button className="primary-btn" onClick={() => setModalShow(true)}>Donate</button>
+            role === 'donor' && req.donationStatus === "pending" && req.requesterEmail !== user.email && <button className="primary-btn" onClick={() => setModalShow(true)}>Donate</button>
           }
         </div>
 

@@ -8,18 +8,24 @@ import DeleteConfirmation from "../../Modals/DeleteConfirmation";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
+import useRole from "../../../hooks/useRole";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 const AllRequests = () => {
 
   const axiosSecure = useAxiosSecure();
   const [modalShow, setModalShow] = useState(false);
 	const [processingCount, setProcessingCount] = useState(0);
+  const [filterOption, setFilterOption] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 	const [currentDeleteReq, setCurrentDeleteReq] = useState("");
+  const [role, isRoleLoading] = useRole();
   const { data: requests = {}, isLoading } = useQuery({
-    queryKey: ["requesterEmail", "donationStatus", processingCount],
+    queryKey: ["requesterEmail", "donationStatus", processingCount, filterOption],
     queryFn: async () => {
       try {
-              const result = await axiosSecure(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests`);
+              const result = await axiosSecure(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?statusFilter=${filterOption}`);
               return result.data;
             }
             catch (err) { toast.error(err.message) }
@@ -45,9 +51,23 @@ const AllRequests = () => {
 				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount}/>
 			}
     <div className="space-y-10">
-      <DashboardNav title="My Donation Requests" />{" "}
+      <DashboardNav title="My Donation Requests" />
+
+    <div className="mt-20">
+            <label className="mb-1 font-medium text-gray-800">
+              Filter by donation status:
+            </label>
+            <select className="w-fit border border-gray-300 rounded-xl px-5 py-2 ml-4 bg-white outline-none cursor-pointer focus:border-(--primary-color)" onChange={(e) => setFilterOption(e.target.value === 'all' ? "" : e.target.value)}>
+              <option>all</option>
+              <option>pending</option>
+              <option>inprogress</option>
+              <option>done</option>
+              <option>canceled</option>
+            </select>
+          </div>
+
           {
-            isLoading && <Loading />
+            isLoading || isRoleLoading || isProcessing && <Loading />
           }
       {requests.length === 0 && (
         <h1>No requests found.</h1>
@@ -109,28 +129,51 @@ const AllRequests = () => {
                       <FiEdit2 size={20} />
                     </Link>
                     }
-                    <button className="text-red-600 hover:text-red-800 cursor-pointer" onClick={() => {
+                    {
+                      role === 'admin' &&
+                      <button className="text-red-600 hover:text-red-800 cursor-pointer" onClick={() => {
 													setModalShow(true);
 													setCurrentDeleteReq(req._id);
 												}}>
                       <FiTrash2 size={20} />
                     </button>
+                    }
                     <Link
                       to={`/donation-requests/${req._id}`}
                       className="text-gray-700 hover:text-black"
                     >
                       <FiEye size={22} />
                     </Link>
-                    {req.status === "inprogress" && (
-                      <>
-                        <button className="text-green-600 hover:text-green-800">
-                          <FiCheck size={22} />
-                        </button>
-                        <button className="text-red-600 hover:text-red-800">
-                          <FiX size={22} />
-                        </button>
-                      </>
-                    )}{" "}
+                    
+                    {
+                                            req.donationStatus === 'inprogress' &&
+                                            <>
+                                                <button className="text-green-600 hover:text-green-800 cursor-pointer" title="Mark as done" onClick={async() => {
+                                                    try {
+                                                        setIsProcessing(true);
+                                                        await axiosSecure.patch(`${import.meta.env.VITE_SERVER_API_URL}/update-donation-status/${req._id}`, {donationStatus: 'done'});
+                                                        toast.success("Marked as done.");
+                                                    }
+                                                    catch (err) { toast.error(err.message) }
+                                                    finally {setProcessingCount(processingCount + 1); setIsProcessing(false);}					
+                                    }}>
+                                          <IoMdCheckmarkCircleOutline size={22} />
+                                        </button>
+                    
+                                        <button className="text-red-600 hover:text-red-800 cursor-pointer" title="Mark as canceled" onClick={async() => {
+                                                    try {
+                                                        setIsProcessing(true);
+                                                        await axiosSecure.patch(`${import.meta.env.VITE_SERVER_API_URL}/update-donation-status/${req._id}`, {donationStatus: 'canceled'});
+                                                        toast.success("Marked as canceled");
+                                                    }
+                                                    catch (err) { toast.error(err.message) }
+                                                    finally {setProcessingCount(processingCount + 1); setIsProcessing(false);}													
+                                }}>
+                                          <IoCloseCircleOutline size={22} />
+                                        </button>
+                                            </>
+                                        }
+
                   </div>
                 </div>
               ))}{" "}
@@ -222,18 +265,50 @@ const AllRequests = () => {
                       <FiEdit2 size={20} />
                     </Link>
                     }
-                    <button className="text-red-600 hover:text-red-700 cursor-pointer" onClick={() => {
+                    {
+                      role === 'admin' &&
+                      <button className="text-red-600 hover:text-red-700 cursor-pointer" onClick={() => {
 													setModalShow(true);
 													setCurrentDeleteReq(req._id);
 												}}>
                       <FiTrash2 size={18} />
                     </button>
+                    }
                     <Link
                       to={`/donation-requests/${req._id}`}
                       className="hover:text-black"
                     >
                       <FiEye size={18} />
                     </Link>
+                        {
+                                            req.donationStatus === 'inprogress' &&
+                                            <>
+                                                <button className="text-green-600 hover:text-green-800 cursor-pointer" title="confirm donation" onClick={async() => {
+                                                    try {
+                                                        setIsProcessing(true);
+                                                        await axiosSecure.patch(`${import.meta.env.VITE_SERVER_API_URL}/update-donation-status/${req._id}`, {donationStatus: 'done'});
+                                                        toast.success("Successfully confirmed donation.");
+                                                    }
+                                                    catch (err) { toast.error(err.message) }
+                                                    finally {setProcessingCount(processingCount + 1); setIsProcessing(false);}					
+                                    }}>
+                                          <IoMdCheckmarkCircleOutline size={22} />
+                                        </button>
+                    
+                                        <button className="text-red-600 hover:text-red-800 cursor-pointer" title="cancel donation" onClick={async() => {
+                                                    try {
+                                                        setIsProcessing(true);
+                                                        await axiosSecure.patch(`${import.meta.env.VITE_SERVER_API_URL}/update-donation-status/${req._id}`, {donationStatus: 'canceled'});
+                                                        toast.success("Successfully canceled donation.");
+                                                    }
+                                                    catch (err) { toast.error(err.message) }
+                                                    finally {setProcessingCount(processingCount + 1); setIsProcessing(false);}													
+                                }}>
+                                          <IoCloseCircleOutline size={22} />
+                                        </button>
+                                            </>
+                                        }
+                    
                   </div>
                 </div>
               </div>

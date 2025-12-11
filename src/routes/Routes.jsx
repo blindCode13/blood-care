@@ -10,7 +10,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../components/Dashboard/Shared/Profile";
 import PrivateRoute from "./PrivateRoute";
 import RequestDonation from "../components/Dashboard/Donor/RequestDonation";
-import DashboardHome from "../components/Dashboard/Donor/DashboardHome";
+import DashboardHome from "../components/Dashboard/Donor/DonorHome";
 import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../components/DonationRequestDetails";
 import EditDonationRequest from "../components/EditDonationRequest";
@@ -19,6 +19,8 @@ import Loading from "../components/Shared/Loading";
 import AdminRoute from "./AdminRoute";
 import MyRequests from "../components/Dashboard/Donor/MyRequests";
 import AllRequests from "../components/Dashboard/Admin/AllRequests";
+import AllUsers from "../components/Dashboard/Admin/AllUsers";
+import RolebasedHome from "../components/Dashboard/RolebasedHome";
 
 export const routes = createBrowserRouter([
     {
@@ -65,7 +67,7 @@ export const routes = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: DashboardHome
+                Component: RolebasedHome
             },
             {
                 path: "/dashboard/create-donation-request",
@@ -78,7 +80,11 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/dashboard/all-blood-donation-request",
-                element: <AdminRoute><AllRequests /></AdminRoute>
+                element: <AllRequests />
+            },
+            {
+                path: "/dashboard/all-users",
+                element: <AdminRoute><AllUsers /></AdminRoute>
             },
             {
                 path: "/dashboard/my-donations",

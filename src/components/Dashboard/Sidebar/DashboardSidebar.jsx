@@ -1,6 +1,7 @@
 import { FiGrid, FiUsers, FiFileText, FiLogOut } from "react-icons/fi";
 import { LuFileUser } from "react-icons/lu";
 import { FaRegUser } from "react-icons/fa";
+import { PiUsersThree } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router";
 import Logo from '../../../assets/Logo.png';
 import { useState } from "react";
@@ -14,7 +15,6 @@ const DashboardSidebar = () => {
     const [modalShow, setModalShow] = useState(false);
     const {logOut} = useAuth();
     const [role, roleLoading] = useRole();
-    console.log(role);
 
     if (roleLoading) return <Loading />
 
@@ -95,8 +95,22 @@ const DashboardSidebar = () => {
 
                 {
                     role === 'admin' &&
-                    <>
-                        <NavLink
+                    <NavLink
+                    to="/dashboard/all-users"
+                    className={({ isActive }) =>
+                        `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
+                        justify-center md:justify-start
+                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                    }
+                >
+                    <PiUsersThree size={24} />
+                    <span className="hidden md:block">All Users</span>
+                </NavLink>
+                }
+
+                {
+                    role !== 'donor' &&
+                    <NavLink
                     to="/dashboard/all-blood-donation-request"
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
@@ -107,7 +121,6 @@ const DashboardSidebar = () => {
                     <FiFileText size={22} />
                     <span className="hidden md:block">All Requests</span>
                 </NavLink>
-                    </>
                 }
 
             </div>

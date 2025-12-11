@@ -14,7 +14,7 @@ const DonationRequests = () => {
 	} = useQuery({
 		queryKey: ['donationStatus'],
 		queryFn: async () => {
-			const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?statusFilter=pending`);
+			const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/public`);
 			return result.data;
 		}
 	});

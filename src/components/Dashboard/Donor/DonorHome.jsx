@@ -14,7 +14,7 @@ import Loading from "../../Shared/Loading";
 import { useState } from "react";
 import DeleteConfirmation from "../../Modals/DeleteConfirmation";
 
-const DashboardHome = () => {
+const DonorHome = () => {
 	const { user } = useAuth();
 	const [modalShow, setModalShow] = useState(false);
 	const [processingCount, setProcessingCount] = useState(0);
@@ -274,4 +274,4 @@ const DashboardHome = () => {
 	);
 };
 
-export default DashboardHome;
+export default DonorHome;
