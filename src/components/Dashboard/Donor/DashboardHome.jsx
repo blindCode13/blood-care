@@ -40,7 +40,7 @@ const DashboardHome = () => {
 	return (
 		<>
 			{
-				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount}/>
+				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount} email={user.email}/>
 			}
 		<div className="space-y-10">
 			<DashboardNav title="Overview" />
@@ -148,18 +148,7 @@ const DashboardHome = () => {
 													<FiEye size={22} />
 												</Link>
 
-												{
-													req.status === "inprogress" && (
-														<>
-															<button className="text-green-600 hover:text-green-800">
-																<FiCheck size={22} />
-															</button>
-															<button className="text-red-600 hover:text-red-800">
-																<FiX size={22} />
-															</button>
-														</>
-													)
-												} </div>
+										</div>
 										</div>
 									))
 								} </div>
@@ -267,19 +256,7 @@ const DashboardHome = () => {
 													className="hover:text-black">
 													<FiEye size={18} />
 												</Link>
-
-												{
-													req.donationStatus === "inprogress" && (
-														<>
-															<button className="text-green-600 hover:text-green-700">
-																<FiCheck size={18} />
-															</button>
-															<button className="text-red-600 hover:text-red-700">
-																<FiX size={18} />
-															</button>
-														</>
-													)
-												} </div>
+												</div>
 										</div>
 									</div>
 								))

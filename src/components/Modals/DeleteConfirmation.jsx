@@ -1,9 +1,11 @@
 import { FaTrashAlt } from "react-icons/fa";
 import ModalContainer from './ModalContainer';
 import { toast } from 'react-toastify';
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const DeleteConfirmation = ({setModalShow, currentDeleteReq, processingCount, setProcessingCount}) => {
+const DeleteConfirmation = ({setModalShow, currentDeleteReq, processingCount, setProcessingCount, email}) => {
+
+	const axiosSecure = useAxiosSecure();
 
 	return (
 		<ModalContainer>
@@ -28,7 +30,7 @@ const DeleteConfirmation = ({setModalShow, currentDeleteReq, processingCount, se
 					</button>
 					<button className="primary-btn cursor-pointer" onClick={async() => {
                         try {
-                            await axios.delete(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/delete/${currentDeleteReq}`);
+                            await axiosSecure.delete(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/delete/${currentDeleteReq}?email=${email}`);
                             setProcessingCount(processingCount + 1);
                             toast.success("Successfully deleted donation request");
                         }

@@ -7,9 +7,11 @@ import axios from 'axios';
 import Loading from '../components/Shared/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { GoArrowLeft } from 'react-icons/go';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const EditDonationRequest = () => {
   const {id} = useParams();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
   const data = useLoaderData().sort((a, b) => a.district.localeCompare(b.district));
@@ -56,7 +58,7 @@ const EditDonationRequest = () => {
     };
 
     try {
-        await axios.patch(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/edit/${id}`, updateReq);
+        await axiosSecure.patch(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/edit/${id}`, updateReq);
         toast.success("Successfully updated donation request");
         reset();
         setSelectedDistrict("");

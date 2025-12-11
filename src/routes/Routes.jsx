@@ -11,12 +11,14 @@ import Profile from "../components/Dashboard/Shared/Profile";
 import PrivateRoute from "./PrivateRoute";
 import RequestDonation from "../components/Dashboard/Donor/RequestDonation";
 import DashboardHome from "../components/Dashboard/Donor/DashboardHome";
-import AllDonationReq from "../components/Dashboard/Donor/AllDonationReq";
 import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../components/DonationRequestDetails";
 import EditDonationRequest from "../components/EditDonationRequest";
 import MyDonations from "../components/Dashboard/Donor/MyDonations";
 import Loading from "../components/Shared/Loading";
+import AdminRoute from "./AdminRoute";
+import MyRequests from "../components/Dashboard/Donor/MyRequests";
+import AllRequests from "../components/Dashboard/Admin/AllRequests";
 
 export const routes = createBrowserRouter([
     {
@@ -72,7 +74,11 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/dashboard/my-donation-requests",
-                Component: AllDonationReq
+                Component: MyRequests
+            },
+            {
+                path: "/dashboard/all-blood-donation-request",
+                element: <AdminRoute><AllRequests /></AdminRoute>
             },
             {
                 path: "/dashboard/my-donations",

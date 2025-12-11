@@ -7,10 +7,12 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Loading from '../../Shared/Loading';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const RequestDonation = () => {
   const { user } = useAuth();
   const data = useLoaderData().sort((a, b) => a.district.localeCompare(b.district));
+  const axiosSecure = useAxiosSecure();
 
 const { data: userData = {}, isLoading } = useQuery({
     queryKey: ['email'],
@@ -53,7 +55,7 @@ const { data: userData = {}, isLoading } = useQuery({
     };
 
     try {
-        await axios.post(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests`, requestData);
+        await axiosSecure.post(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests`, requestData);
         toast.success("Donation requested");
         reset();
         setSelectedDistrict("");

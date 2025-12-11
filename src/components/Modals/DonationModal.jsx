@@ -1,7 +1,7 @@
 
 import ModalContainer from "./ModalContainer";
 import { toast } from "react-toastify";
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const DonationModal = ({
   req,
@@ -11,6 +11,7 @@ const DonationModal = ({
   setProcessingCount,
   revalidator
 }) => {
+  const axiosSecure = useAxiosSecure();
   return (
     <ModalContainer>
       <div>
@@ -51,7 +52,7 @@ const DonationModal = ({
             className="primary-btn cursor-pointer"
             onClick={async () => {
               try {
-                await axios.patch(`${import.meta.env.VITE_SERVER_API_URL}/donate/${req._id}`, {name: user.displayName, email: user.email});
+                await axiosSecure.patch(`${import.meta.env.VITE_SERVER_API_URL}/donate/${req._id}`, {name: user.displayName, email: user.email});
                 setProcessingCount(processingCount + 1);
                 toast.success("Accepted donation request");
               } catch (err) {

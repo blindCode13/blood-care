@@ -3,13 +3,15 @@ import { FiEdit2, FiTrash2, FiEye, FiCheck, FiX } from "react-icons/fi";
 import { Link } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Loading from "../../Shared/Loading";
 import { useState } from "react";
 import DeleteConfirmation from "../../Modals/DeleteConfirmation";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 
-const DashboardHome = () => {
+const MyRequests = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [modalShow, setModalShow] = useState(false);
 	const [processingCount, setProcessingCount] = useState(0);
 	const [currentDeleteReq, setCurrentDeleteReq] = useState("");
@@ -17,12 +19,11 @@ const DashboardHome = () => {
   const { data: requests = {}, isLoading } = useQuery({
     queryKey: ["requesterEmail", "donationStatus", filterOption, processingCount],
     queryFn: async () => {
-      const result = await axios(
-        `${import.meta.env.VITE_SERVER_API_URL}/donation-requests?email=${
-          user.email
-        }&statusFilter=${filterOption}`
-      );
-      return result.data;
+      try {
+        const result = await axiosSecure(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?email=${user.email}&statusFilter=${filterOption}`);
+        return result.data;
+      }
+      catch (err) { toast.error(err.message) }
     },
   });
 
@@ -112,12 +113,15 @@ const DashboardHome = () => {
                   </span>
 
                   <div className="flex items-center gap-3">
-                    <Link
+                    {
+                      req.donationStatus === 'pending' &&
+                      <Link
                       to={`/donation-requests/edit/${req._id}`}
                       className="text-blue-600 hover:text-blue-800"
                     >
                       <FiEdit2 size={20} />
                     </Link>
+                    }
                     <button className="text-red-600 hover:text-red-800 cursor-pointer" onClick={() => {
 													setModalShow(true);
 													setCurrentDeleteReq(req._id);
@@ -222,12 +226,15 @@ const DashboardHome = () => {
 												      "
                 >
                   <div className="flex items-center gap-4 text-gray-600">
-                    <Link
+                    {
+                      req.donationStatus === 'pending' &&
+                      <Link
                       to={`/donation-requests/edit/${req._id}`}
                       className="text-blue-600 hover:text-blue-800"
                     >
-                      <FiEdit2 size={18} />
+                      <FiEdit2 size={20} />
                     </Link>
+                    }
                     <button className="text-red-600 hover:text-red-700 cursor-pointer" onClick={() => {
 													setModalShow(true);
 													setCurrentDeleteReq(req._id);
@@ -240,16 +247,6 @@ const DashboardHome = () => {
                     >
                       <FiEye size={18} />
                     </Link>
-                    {req.donationStatus === "inprogress" && (
-                      <>
-                        <button className="text-green-600 hover:text-green-700">
-                          <FiCheck size={18} />
-                        </button>
-                        <button className="text-red-600 hover:text-red-700">
-                          <FiX size={18} />
-                        </button>
-                      </>
-                    )}{" "}
                   </div>
                 </div>
               </div>
@@ -262,4 +259,4 @@ const DashboardHome = () => {
   );
 };
 
-export default DashboardHome;
+export default MyRequests;
