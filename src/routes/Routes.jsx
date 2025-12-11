@@ -92,6 +92,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/dashboard/profile",
+                loader: () => axios("../../src/data/location.json").then(res => res.data),
                 Component: Profile
             }
         ]
