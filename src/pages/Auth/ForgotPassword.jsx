@@ -1,10 +1,32 @@
-import React from "react";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { useState } from "react";
 import { FiKey } from "react-icons/fi";
 import { GoArrowLeft } from "react-icons/go";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { auth } from "../../firebase/firebase.config";
+import { toast } from "react-toastify";
+import Loading from "../../components/Shared/Loading";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  if (isProcessing) return <Loading />
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    
+    try {
+      setIsProcessing(true);
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Password reset instructions sent successfully to your email.");
+    }
+    catch (err) { toast.error(err.message); }
+    finally {setIsProcessing(false);}
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="bg-white shadow-lg rounded-3xl px-12 py-10 w-full max-w-[500px] relative">
@@ -23,13 +45,16 @@ const ForgotPassword = () => {
           </p>
         </div>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleFormSubmit}>
           <div>
             <label className="block mb-1 font-medium text-gray-800">Email Address</label>
             <input
               type="email"
+              name="email"
               className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
               placeholder="yourname@example.com"
+              required
+              defaultValue={location.state ? location.state : ""}
             />
           </div>
 

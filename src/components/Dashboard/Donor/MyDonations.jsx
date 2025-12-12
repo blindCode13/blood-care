@@ -49,8 +49,8 @@ const MyDonations = () => {
             <label className="mb-1 font-medium text-gray-800">
               Filter by donation status:
             </label>
-            <select className="w-fit border border-gray-300 rounded-xl px-5 py-2 ml-4 bg-white outline-none cursor-pointer focus:border-(--primary-color)" onChange={(e) => setFilterOption(e.target.value === 'none' ? "" : e.target.value)}>
-              <option>none</option>
+            <select className="w-fit border border-gray-300 rounded-xl px-5 py-2 ml-4 bg-white outline-none cursor-pointer focus:border-(--primary-color)" onChange={(e) => setFilterOption(e.target.value === 'all' ? "" : e.target.value)}>
+              <option>all</option>
               <option>inprogress</option>
               <option>done</option>
               <option>canceled</option>

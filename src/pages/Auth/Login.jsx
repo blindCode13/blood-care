@@ -12,7 +12,7 @@ const Login = () => {
   const {user, loading, setLoading, logIn} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { register, handleSubmit, formState: { errors }, } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const from = location.state || "/";
 
@@ -91,7 +91,7 @@ const Login = () => {
 
           <div>
             <span className="text-(--primary-color) text-sm font-medium cursor-pointer hover:underline">
-              <Link to="/forgot-password">Forgot Password?</Link>
+              <Link to="/forgot-password" state={watch('email')}>Forgot Password?</Link>
             </span>
           </div>
 

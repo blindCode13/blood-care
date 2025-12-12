@@ -3,20 +3,19 @@ import {
 	FiEdit2,
 	FiTrash2,
 	FiEye,
-	FiCheck,
-	FiX
 } from "react-icons/fi";
 import { Link } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Loading from "../../Shared/Loading";
 import { useState } from "react";
 import DeleteConfirmation from "../../Modals/DeleteConfirmation";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const DonorHome = () => {
 	const { user } = useAuth();
 	const [modalShow, setModalShow] = useState(false);
+	const axiosSecure = useAxiosSecure();
 	const [processingCount, setProcessingCount] = useState(0);
 	const [currentDeleteReq, setCurrentDeleteReq] = useState("");
 	const {
@@ -25,13 +24,12 @@ const DonorHome = () => {
 	} = useQuery({
 		queryKey: ['requesterEmail', processingCount],
 		queryFn: async () => {
-			const result = await axios(`${import.meta.env.VITE_SERVER_API_URL
+			const result = await axiosSecure(`${import.meta.env.VITE_SERVER_API_URL
 				}/donation-requests?email=${user.email
 				}&statusFilter=pending`);
 			return result.data;
 		}
 	});
-	console.log(processingCount);
 
 	if (isLoading) return <Loading />
 

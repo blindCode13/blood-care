@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DashboardNav from "../Shared/DashboardNav";
 import useAuth from "../../../hooks/useAuth";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -156,6 +156,10 @@ const Profile = () => {
               {userData.status}
             </span>
           </div>
+
+          <div className="text-red-400 text-sm mt-4 hover:underline hover:text-red-600 cursor-pointer">
+            <Link to="/forgot-password" state={user.email}>Request password reset</Link>
+            </div>
 
           {!editMode && (
             <button
