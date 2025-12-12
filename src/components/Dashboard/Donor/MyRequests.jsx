@@ -43,7 +43,7 @@ const MyRequests = () => {
   return (
     <>
       {
-				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount}/>
+				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount} email={user.email}/>
 			}
     <div className="space-y-10">
       <DashboardNav title="My Donation Requests" />

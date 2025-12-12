@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import DashboardNav from '../Shared/DashboardNav';
 import useAuth from '../../../hooks/useAuth';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useLocation } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -22,6 +22,7 @@ const { data: userData = {}, isLoading } = useQuery({
     },
   });
 
+  const location = useLocation();
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
   const [triggerError, setTriggerError] = useState(false);
@@ -48,10 +49,12 @@ const { data: userData = {}, isLoading } = useQuery({
       recipientUpazila: selectedUpazila,
       hospitalName: formData.hospitalName,
       fullAddress: formData.fullAddress,
-      bloodGroup: formData.bloodGroup,
+      bloodGroup: location?.state?.donorInfo ? location.state.donorInfo.bloodGroup : formData.bloodGroup,
       donationDate: formData.donationDate,
       donationTime: formData.donationTime,
       requestMessage: formData.requestMessage,
+      donorName: formData?.donorName || null,
+      donorEmail: formData?.donorEmail || null
     };
 
     try {
@@ -114,6 +117,34 @@ const { data: userData = {}, isLoading } = useQuery({
               />
               {errors.recipientName && <p className="text-red-600 mt-1 ml-1">Required</p>}
             </div>
+
+            {
+              location?.state?.donorInfo ? 
+              <>
+                <div>
+                  <label className="block mb-1 font-medium text-gray-800">Donor Name</label>
+                    <input
+                      type="text"
+                      name="donorName"
+                      readOnly
+                      value={location.state.donorInfo.donorName}
+                      className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                      {...register("donorName")}
+                    />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-gray-800">Donor Email</label>
+                    <input
+                      type="text"
+                      readOnly
+                      value={location.state.donorInfo.donorEmail}
+                      className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                      {...register("donorEmail")}
+                    />
+                </div>
+              </> : ""
+            }
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
@@ -199,8 +230,9 @@ const { data: userData = {}, isLoading } = useQuery({
             <div>
               <label className="block mb-1 font-medium text-gray-800">Blood Group</label>
               <select
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none cursor-pointer focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
-                {...register("bloodGroup")}
+                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none cursor-pointer focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color) disabled:bg-gray-100"
+                defaultValue={location?.state?.donorInfo && location.state.donorInfo.bloodGroup}
+                {...register("bloodGroup", {disabled: location?.state?.donorInfo && true})}
               >
                 <option>A+</option>
                 <option>A-</option>

@@ -10,7 +10,6 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../components/Dashboard/Shared/Profile";
 import PrivateRoute from "./PrivateRoute";
 import RequestDonation from "../components/Dashboard/Donor/RequestDonation";
-import DashboardHome from "../components/Dashboard/Donor/DonorHome";
 import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../components/DonationRequestDetails";
 import EditDonationRequest from "../components/EditDonationRequest";
@@ -21,6 +20,7 @@ import MyRequests from "../components/Dashboard/Donor/MyRequests";
 import AllRequests from "../components/Dashboard/Admin/AllRequests";
 import AllUsers from "../components/Dashboard/Admin/AllUsers";
 import RolebasedHome from "../components/Dashboard/RolebasedHome";
+import SearchDonors from "../pages/SearchDonors";
 
 export const routes = createBrowserRouter([
     {
@@ -45,6 +45,11 @@ export const routes = createBrowserRouter([
                 path: "/donation-requests/edit/:id",
                 loader: () => axios("../../src/data/location.json").then(res => res.data),
                 element: <PrivateRoute><EditDonationRequest /></PrivateRoute>
+            },
+            {
+                path: "/search-donors",
+                Component: SearchDonors,
+                loader: () => axios("../../src/data/location.json").then(res => res.data)
             },
             {
                 path: "/funding",

@@ -38,6 +38,7 @@ const NavBar = () => {
                 <ul className='lg:flex hidden items-center justify-center gap-8'>
                     <li><NavLink to="/">Home</NavLink></li>
                     <li><NavLink to="/donation-requests">Donation Requests</NavLink></li>
+                    <li><NavLink to="/search-donors">Search Donors</NavLink></li>
                     <li><NavLink to="/funding">Funding</NavLink></li>
                 </ul>
 
@@ -73,6 +74,7 @@ const NavItems = ({ close, user, navigate }) => (
         <ul className='flex flex-col lg:flex-row items-center justify-center gap-8'>
             <li><NavLink onClick={close} to="/">Home</NavLink></li>
             <li><NavLink onClick={close} to="/donation-requests">Donation Requests</NavLink></li>
+            <li><NavLink to="/search-donors">Search Donors</NavLink></li>
             <li><NavLink onClick={close} to="/funding">Funding</NavLink></li>
         </ul>
         <div>
