@@ -1,7 +1,10 @@
 
 import ModalContainer from "./ModalContainer";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../Shared/Loading";
 
 const DonationModal = ({
   req,
@@ -11,7 +14,18 @@ const DonationModal = ({
   setProcessingCount,
   revalidator
 }) => {
+
   const axiosSecure = useAxiosSecure();
+  const {data: resData = {}, isLoading } = useQuery({
+    queryKey: ['email'],
+    queryFn: async () => {
+      const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/bloodType/${user.email}`);
+      return result.data
+    }
+  });
+
+  if (isLoading) return <Loading />
+
   return (
     <ModalContainer>
       <div>
@@ -28,7 +42,7 @@ const DonationModal = ({
             />
           </div>
 
-          <div>
+          <div className="mt-4">
             <label className="block mb-1 font-medium text-gray-800">
               Email Address
             </label>
@@ -41,7 +55,9 @@ const DonationModal = ({
           </div>
         </form>
 
-        <div className="flex justify-center gap-3 mt-6">
+        {
+          resData.bloodGroup === req.bloodGroup ? 
+          <div className="flex justify-center gap-3 mt-6">
           <button
             className="secondery-btn cursor-pointer"
             onClick={() => setModalShow(false)}
@@ -65,7 +81,14 @@ const DonationModal = ({
           >
             Confirm
           </button>
-        </div>
+        </div> : 
+        <>
+          <h1 className="text-center text-red-500 mt-5">You can't donate to this request as your blood group is not matched.</h1>
+          <div className="flex items-center justify-center mt-4">
+            <button className="primary-btn" onClick={() => setModalShow(false)}>Close</button>
+          </div>
+        </>
+        }
       </div>
     </ModalContainer>
   );
