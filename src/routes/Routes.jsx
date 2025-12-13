@@ -21,6 +21,7 @@ import AllRequests from "../components/Dashboard/Admin/AllRequests";
 import AllUsers from "../components/Dashboard/Admin/AllUsers";
 import RolebasedHome from "../components/Dashboard/RolebasedHome";
 import SearchDonors from "../pages/SearchDonors";
+import PaymentSuccess from "../pages/PaymentSuccess";
 
 export const routes = createBrowserRouter([
     {
@@ -53,7 +54,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/funding",
-                Component: Funding
+                element: <PrivateRoute><Funding /></PrivateRoute>
             }
         ]
     },
@@ -65,6 +66,10 @@ export const routes = createBrowserRouter([
         loader: () => axios("../../src/data/location.json").then(res => res.data)
     },
     { path: "/forgot-password", Component: ForgotPassword },
+    {
+        path: "/payment-success",
+        Component: PaymentSuccess
+    },
 
     {
         path: "/dashboard",
