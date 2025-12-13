@@ -50,17 +50,19 @@ const Funding = () => {
             </div>
 
             <div className=' xl:block space-y-3'>
-                <div className="grid grid-cols-3 mx-auto max-w-[800px] text-center gap-x-4 py-3 text-sm text-gray-500 uppercase">
-                    <span>Countributor</span>
+                <div className="grid grid-cols-4 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
+                    <span>Sl no</span>
+                    <span>contributors</span>
                     <span>amount</span>
                     <span>date</span>
                 </div>
 
-                {funds.map((fund) => (
+                {funds.map((fund, index) => (
                 <div
                   key={fund._id}
-                  className="grid grid-cols-3 gap-x-4 mx-auto max-w-[800px] items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-4"
+                  className="grid grid-cols-4 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
                 >
+                  <span className="font-medium">{index+1}</span>
                   <span className="font-medium">{fund.name}</span>
                   <span className="font-medium">{fund.amount} $</span>
                   <span className="font-medium">{new Date(fund.date).toLocaleDateString()}</span>

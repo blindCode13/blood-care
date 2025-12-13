@@ -32,7 +32,7 @@ const Home = () => {
             {
               !user && <button className="primary-btn" onClick={() => navigate("/register")}>Join as a donor</button>
             }
-            <button className="secondery-btn">Search Donors</button>
+            <button className="secondery-btn" onClick={() => navigate("/search-donors")}>Search Donors</button>
           </div>
         </div>
         <img

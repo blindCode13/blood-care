@@ -8,7 +8,7 @@ import Loading from '../components/Shared/Loading';
 const RootLayout = () => {
     const {loading} = useAuth();
 
-    if (loading) return <Loading />
+    if (loading) return <div className='min-h-screen flex items-center'><Loading /></div>
     return (
         <div className='px-4 md:px-12 max-w-[1920px] mx-auto'>
             <NavBar></NavBar>

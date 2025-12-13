@@ -16,7 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const from = location.state || "/";
 
-  if (loading) return <Loading />
+  if (loading) return <div className='min-h-screen flex items-center'><Loading /></div>
   if (user) return <Navigate to={from} replace={true} />
 
   const formSubmit = async(data) => {

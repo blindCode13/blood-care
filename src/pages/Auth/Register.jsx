@@ -27,7 +27,7 @@ const Register = () => {
 
   const { register, handleSubmit, watch, formState: { errors }, } = useForm();
 
-  if (loading || isProcessing) return <Loading />
+  if (loading || isProcessing) return <div className='min-h-screen flex items-center'><Loading /></div>
   if (user) return <Navigate to={from} replace={true} />
 
 

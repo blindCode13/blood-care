@@ -51,7 +51,7 @@ const AllRequests = () => {
 				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount}/>
 			}
     <div className="space-y-10">
-      <DashboardNav title="My Donation Requests" />
+      <DashboardNav title="All Donation Requests" />
 
     <div className="mt-20">
             <label className="mb-1 font-medium text-gray-800">

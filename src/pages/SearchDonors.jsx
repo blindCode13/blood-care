@@ -41,8 +41,6 @@ const SearchDonors = () => {
     setSearchKey((prev) => prev + 1);
   };
 
-  if (isLoading) return <Loading />;
-
   return (
     <div className="space-y-10">
 
@@ -57,7 +55,7 @@ const SearchDonors = () => {
             <select
               value={bloodGroup}
               onChange={(e) => setBloodGroup(e.target.value)}
-              className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none focus:border-(--primary-color)"
+              className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none focus:border-(--primary-color) cursor-pointer"
             >
               <option value="all">All</option>
               <option>A+</option><option>A-</option>
@@ -104,6 +102,10 @@ const SearchDonors = () => {
         </div>
       </div>
 
+      {
+        isLoading && <Loading />
+      }
+
       {hasSearched && (
         <div className="space-y-6">
 
@@ -115,18 +117,20 @@ const SearchDonors = () => {
 
           {users.length > 0 && (
             <div className="hidden xl:block space-y-3">
-              <div className="grid grid-cols-4 mx-auto max-w-[1200px] text-center gap-x-4 py-3 text-sm text-gray-500 uppercase">
+              <div className="grid grid-cols-5 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
+                <span>Sl no</span>
                 <span>Name</span>
                 <span>Blood Group</span>
                 <span>Location</span>
                 <span>Action</span>
               </div>
 
-              {users.map((user) => (
+              {users.map((user, index) => (
                 <div
                   key={user._id}
-                  className="grid grid-cols-4 gap-x-4 mx-auto max-w-[1200px] items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-4"
+                  className="grid grid-cols-5 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
                 >
+                  <span className="font-medium">{index+1}</span>
                   <span className="font-medium">{user.name}</span>
 
                   <span className="px-3 py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color)">
@@ -150,13 +154,13 @@ const SearchDonors = () => {
           )}
 
           <div className="xl:hidden space-y-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {users.map((user) => (
+            {users.map((user, index) => (
               <div
                 key={user._id}
-                className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm"
+                className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm size-full"
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-lg font-semibold">{user.name}</p>
+                  <p className="text-lg font-semibold">{index+1}. {user.name}</p>
 
                   <span className="inline-block mt-2 px-3 py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color)">
                     {user.bloodGroup}

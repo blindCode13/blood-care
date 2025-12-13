@@ -12,10 +12,9 @@ const Footer = () => {
             <div className='my-12'>
                 <p className='mb-5 text-sm text-gray-500 text-center max-w-[400px] mx-auto'>BloodCare is a community-driven platform designed to connect willing donors with patients in urgent need.</p>
                 <ul className='flex flex-col md:flex-row items-center justify-center gap-5'>
-                    <li><Link>Home</Link></li>
-                    <li><Link>Donation Requests</Link></li>
-                    <li><Link>Funding</Link></li>
-                    <li><Link>About Us</Link></li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/donation-requests">Donation Requests</Link></li>
+                    <li><Link to="/funding">Funding</Link></li>
                 </ul>
             </div>
             <p className='text-sm text-gray-500 text-center'>&copy; 2025 BloodCare. All rights reserved</p>

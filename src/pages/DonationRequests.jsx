@@ -4,34 +4,42 @@ import axios from "axios";
 import Loading from "../components/Shared/Loading";
 import { useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
+import { useState } from "react";
 
 const DonationRequests = () => {
 	const navigate = useNavigate();
+	const [currentPage, setCurrentPage] = useState(0);
 	const {user} = useAuth();
 	const {
 		data: requests = {},
 		isLoading
 	} = useQuery({
-		queryKey: ['donationStatus'],
+		queryKey: ['donationStatus', currentPage],
 		queryFn: async () => {
-			const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/public`);
+			const result = await axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/public?limit=5&skip=${currentPage*5}`);
 			return result.data;
 		}
 	});
 
 	if (isLoading) return <Loading />
+	
+	const pages = Math.ceil(requests.count / 5);
+	console.log(currentPage, requests.count);
+	
+	
 
 	return (
 		<div className="space-y-10">
 			{
-				requests.length === 0 && <h1>Nothing to show.</h1>
+				requests?.result.length === 0 && <h1>Nothing to show.</h1>
 			}
 
 			{
-				requests.length > 0 && (
+				requests.result.length > 0 && (
 					<div className="space-y-4">
 						<div className="hidden xl:block">
-							<div className="grid grid-cols-8 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
+							<div className="grid grid-cols-9 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
+								<span>sl no</span>
 								<span>Recipient</span>
 								<span>Location</span>
 								<span>Date</span>
@@ -44,11 +52,15 @@ const DonationRequests = () => {
 
 							<div className="space-y-4">
 								{
-									requests.map((req) => (
+									requests?.result.map((req, index) => (
 										<div key={
 											req._id
 										}
-											className={`grid grid-cols-8 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5 ${req.requesterEmail === user?.email ? 'border-l-8 border-amber-200' : ''}`}>
+											className={`grid grid-cols-9 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5 ${req.requesterEmail === user?.email ? 'border-l-8 border-amber-200' : ''}`}>
+												<span className="font-medium">
+												{
+													(currentPage * 5) + index + 1
+												}</span>
 											<span className="font-medium">
 												{
 													req.recipientName
@@ -93,7 +105,7 @@ const DonationRequests = () => {
 
 						<div className="xl:hidden space-y-5">
 							{
-								requests.map((req) => (
+								requests?.result.map((req, index) => (
 									<div key={
 										req._id
 									}
@@ -109,7 +121,7 @@ const DonationRequests = () => {
 										<div className="flex justify-between items-start">
 											<div className="space-y-0.5">
 												<h4 className="text-lg font-semibold text-(--primary-color)">
-													<span className="font-normal text-black">Recipient:</span>
+													<span className="font-normal text-black">{(currentPage * 5) + index + 1}. Recipient:</span>
 													{" "}
 													{
 														req.recipientName
@@ -173,7 +185,16 @@ const DonationRequests = () => {
 							} </div>
 					</div>
 				)
-			} </div>
+			}
+				<div className="flex items-center justify-center gap-5 my-12">
+								{
+									Array.from({ length: pages }).map((_, index) => (
+        								<button key={index} className={`flex items-center justify-center size-12 bg-white rounded-md border-2 font-bold border-(--primary-color) cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
+      								))
+								}
+							</div>
+			
+			 </div>
 	);
 };
 
