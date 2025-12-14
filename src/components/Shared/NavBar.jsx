@@ -1,10 +1,9 @@
-import { Link, NavLink, useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { FiLogOut, FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
-import { MdDashboard, MdSpaceDashboard } from "react-icons/md";
+import { MdSpaceDashboard } from "react-icons/md";
 import { IoMdCloseCircle } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
-import { TbLogout2 } from "react-icons/tb";
 import Logo from '../../assets/Logo.png';
 import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
@@ -88,7 +87,7 @@ const NavItems = ({ close, user, navigate }) => (
 
 const ProfileDropdown = ({setDropDown, userData, setModalShow, navigate}) => {
   return (
-    <div className="absolute right-4 -bottom-64 w-64 bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
+    <div className="absolute right-4 -bottom-64 w-80 bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
       
       <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
         <div>

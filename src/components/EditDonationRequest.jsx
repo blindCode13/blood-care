@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import useAuth from '../hooks/useAuth';
 import { useLoaderData, useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -8,11 +7,11 @@ import Loading from '../components/Shared/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { GoArrowLeft } from 'react-icons/go';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import NotFound from './Notfound';
 
 const EditDonationRequest = () => {
   const {id} = useParams();
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const data = useLoaderData().sort((a, b) => a.district.localeCompare(b.district));
 
@@ -32,6 +31,7 @@ const EditDonationRequest = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   if (isProcessing || isLoading) return <Loading />
+  if (!isLoading && !request) return <NotFound />
 
   const formSubmit = async(formData) => {
     if (!selectedDistrict || !selectedUpazila) {
@@ -90,7 +90,7 @@ const EditDonationRequest = () => {
               <input
                 type="text"
                 readOnly
-                value={user?.displayName || ""}
+                value={request.requesterName}
                 className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
               />
             </div>
@@ -100,7 +100,7 @@ const EditDonationRequest = () => {
               <input
                 type="email"
                 readOnly
-                value={user?.email || ""}
+                value={request.requesterEmail}
                 className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
               />
             </div>

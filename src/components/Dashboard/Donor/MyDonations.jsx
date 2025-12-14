@@ -14,19 +14,21 @@ const MyDonations = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [filterOption, setFilterOption] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingCount, setProcessingCount] = useState(0);
   const { data: requests = {}, isLoading } = useQuery({
-    queryKey: ["requesterEmail", "donationStatus", filterOption, processingCount],
+    queryKey: ["requesterEmail", "donationStatus", filterOption, processingCount, currentPage],
     queryFn: async () => {
       const result = await axiosSecure(
         `${import.meta.env.VITE_SERVER_API_URL}/donations?email=${
-          user.email
-        }&statusFilter=${filterOption}`
+          user.email}&statusFilter=${filterOption}&limit=5&skip=${currentPage*5}`
       );
       return result.data;
     },
   });
+
+  const pages = isLoading ? 0 : Math.ceil(requests.count / 5);
 
   const statusStyle = (status) => {
     switch (status) {
@@ -45,7 +47,7 @@ const MyDonations = () => {
     <>
     <div className="space-y-10">
       <DashboardNav title="My Donations" />
-      <div className="mt-20">
+      <div className="mt-12">
             <label className="mb-1 font-medium text-gray-800">
               Filter by donation status:
             </label>
@@ -59,33 +61,35 @@ const MyDonations = () => {
           {
             isLoading && isProcessing && <Loading />
           }
-      {requests.length === 0 && (
+      {!isLoading && requests?.result.length === 0 && (
         <h1>No requests found.</h1>
         
       )}
-      {requests.length > 0 && (
+      {!isLoading && requests?.result.length > 0 && (
         <div className="space-y-4">
+          <div className="text-3xl">Total Donations: <span className="text-(--primary-color)">{requests.count}</span></div>
           <div className="hidden xl:block">
             <div className="grid grid-cols-8 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase">
+              <span>Sl no</span>
               <span>Recipient</span>
               <span>Location</span>
               <span>Date</span>
               <span>Time</span>
               <span>Blood</span>
-              <span>Donor info</span>
               <span>Status</span>
               <span>Actions</span>
             </div>
 
             <div className="space-y-4">
-              {requests.map((req) => (
+              {requests?.result.map((req, index) => (
                 <div
                   key={req._id}
                   className="grid grid-cols-8 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
                 >
-                  <span className="font-medium">{req.recipientName}</span>
+                  <span className="font-medium text-center">{(currentPage * 5) + index + 1}</span>
+                  <span className="font-medium text-center">{req.recipientName}</span>
 
-                  <span className="text-gray-700">
+                  <span className="text-gray-700 text-center">
                     {req.recipientDistrict},<br /> {req.recipientUpazila}{" "}
                   </span>
 
@@ -94,11 +98,6 @@ const MyDonations = () => {
 
                   <span className="px-3 w-fit py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color) text-sm font-medium">
                     {req.bloodGroup}{" "}
-                  </span>
-
-                  <span className="text-gray-700">
-                    {req.donorName ? req.donorName : "..."}
-                    <br /> {req.donorEmail ? req.donorEmail : "..."}{" "}
                   </span>
 
                   <span
@@ -153,7 +152,7 @@ const MyDonations = () => {
           </div>
 
           <div className="xl:hidden space-y-5">
-            {requests.map((req) => (
+            {requests?.result.map((req, index) => (
               <div
                 key={req._id}
                 className="
@@ -169,7 +168,7 @@ const MyDonations = () => {
                 <div className="flex justify-between items-start">
                   <div className="space-y-0.5">
                     <h4 className="text-lg font-semibold text-(--primary-color)">
-                      <span className="font-normal text-black">Recipient:</span>{" "}
+                      <span className="font-normal text-black">{(currentPage * 5) + index + 1}. Recipient:</span>
                       {req.recipientName}{" "}
                     </h4>
 
@@ -274,6 +273,14 @@ const MyDonations = () => {
         </div>
       )}
     </div>
+
+              <div className="flex items-center justify-center gap-5 my-12 flex-wrap">
+								{
+									Array.from({ length: pages }).map((_, index) => (
+        								<button key={index} className={`flex items-center justify-center size-12 bg-white rounded-md border-2 font-bold border-(--primary-color) cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
+      								))
+								}
+							</div>
     </>
   );
 };

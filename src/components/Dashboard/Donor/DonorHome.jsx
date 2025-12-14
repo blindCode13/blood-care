@@ -33,7 +33,7 @@ const DonorHome = () => {
 
 	if (isLoading) return <Loading />
 
-	const recent = requests.slice(0, 3);
+	const recent = requests?.result.slice(0, 3);
 
 	return (
 		<>

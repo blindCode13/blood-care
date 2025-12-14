@@ -49,7 +49,13 @@ const Funding = () => {
                 </form>
             </div>
 
-            <div className=' xl:block space-y-3'>
+            {
+              funds.length === 0 && <h1 className='text-center'>No funds found.</h1>
+            }
+
+            {
+              funds.length > 0 &&
+              <div className=' xl:block space-y-3'>
                 <div className="grid grid-cols-4 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
                     <span>Sl no</span>
                     <span>contributors</span>
@@ -69,6 +75,7 @@ const Funding = () => {
                 </div>
               ))}
             </div>
+            }
         </div>
     );
 };

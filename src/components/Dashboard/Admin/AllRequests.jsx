@@ -49,8 +49,7 @@ const AllRequests = () => {
     }
   };
 
-  const pages = !isLoading && Math.ceil(requests.count / 5);
-  console.log(pages);
+  const pages = isLoading ? 0 : Math.ceil(requests.count / 5);
 
   return (
     <>
@@ -116,7 +115,7 @@ const AllRequests = () => {
                     {req.bloodGroup}{" "}
                   </span>
 
-                  <span className="text-gray-700">
+                  <span className="text-gray-700 text-xs text-center">
                     {req.donorName ? req.donorName : "..."}
                     <br /> {req.donorEmail ? req.donorEmail : "..."}{" "}
                   </span>
@@ -327,7 +326,7 @@ const AllRequests = () => {
         </div>
       )}
     </div>
-              <div className="flex items-center justify-center gap-5 my-12">
+              <div className="flex items-center justify-center gap-5 my-12 flex-wrap">
 								{
 									Array.from({ length: pages }).map((_, index) => (
         								<button key={index} className={`flex items-center justify-center size-12 bg-white rounded-md border-2 font-bold border-(--primary-color) cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>

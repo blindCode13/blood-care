@@ -16,6 +16,7 @@ import { useState } from "react";
 import DonationModal from "./Modals/DonationModal";
 import useRole from "../hooks/useRole";
 import Loading from "./Shared/Loading";
+import NotFound from "./Notfound";
 
 const DonationRequestDetails = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -27,6 +28,8 @@ const DonationRequestDetails = () => {
   const navigate = useNavigate();
 
   if (isRoleLoading) return <Loading />
+
+  if (!req) return <NotFound />
 
 
   const statusStyle = (status) => {

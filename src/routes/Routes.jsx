@@ -22,11 +22,14 @@ import AllUsers from "../components/Dashboard/Admin/AllUsers";
 import RolebasedHome from "../components/Dashboard/RolebasedHome";
 import SearchDonors from "../pages/SearchDonors";
 import PaymentSuccess from "../pages/PaymentSuccess";
+import ErrorElement from "../components/ErrorElement";
+import NotFound from "../components/Notfound";
 
 export const routes = createBrowserRouter([
     {
         path: "/",
         Component: RootLayout,
+        errorElement: <ErrorElement />,
         children: [
             {
                 index: true,
@@ -69,6 +72,10 @@ export const routes = createBrowserRouter([
     {
         path: "/payment-success",
         Component: PaymentSuccess
+    },
+    {
+        path: "*",
+        Component: NotFound
     },
 
     {

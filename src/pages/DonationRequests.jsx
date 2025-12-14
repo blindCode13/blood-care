@@ -58,19 +58,19 @@ const DonationRequests = () => {
 												{
 													(currentPage * 5) + index + 1
 												}</span>
-											<span className="font-medium">
+											<span className="font-medium text-center">
 												{
 													req.recipientName
 												}</span>
 
-											<span className="text-gray-700">
+											<span className="text-gray-700 text-center">
 												{
 													req.recipientDistrict
 												},<br /> {
 													req.recipientUpazila
 												} </span>
 
-											<span>{
+											<span className="text-center">{
 												req.donationDate
 											}</span>
 											<span>{
@@ -183,7 +183,7 @@ const DonationRequests = () => {
 					</div>
 				)
 			}
-				<div className="flex items-center justify-center gap-5 my-12">
+				<div className="flex items-center justify-center gap-5 my-12 flex-wrap">
 								{
 									Array.from({ length: pages }).map((_, index) => (
         								<button key={index} className={`flex items-center justify-center size-12 bg-white rounded-md border-2 font-bold border-(--primary-color) cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
