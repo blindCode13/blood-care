@@ -24,9 +24,6 @@ const DonationRequests = () => {
 	if (isLoading) return <Loading />
 	
 	const pages = Math.ceil(requests.count / 5);
-	console.log(currentPage, requests.count);
-	
-	
 
 	return (
 		<div className="space-y-10">

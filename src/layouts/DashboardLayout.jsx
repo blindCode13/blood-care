@@ -6,7 +6,7 @@ import Loading from '../components/Shared/Loading';
 const DashboardLayout = () => {
     const { loading } = useAuth();
 
-    if (loading) return <Loading />;
+    if (loading) return <Loading />
 
     return (
         <div className="flex min-h-screen">

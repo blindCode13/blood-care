@@ -5,7 +5,7 @@ const DashboardNav = ({ title }) => {
 
     return (
         <div className="flex items-center justify-between gap-5">
-            <h1 className="text-4xl md:text-3xl font-bold">{title}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
 
             <div className="flex items-center gap-2">
                 <img 

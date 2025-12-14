@@ -11,7 +11,7 @@ const AllUsers = () => {
   const [processingCount, setProcessingCount] = useState(0);
   const [filterStatus, setFilterStatus] = useState("all");
 
-  const { data: users = [], isLoading } = useQuery({
+  const { data: request = {}, isLoading } = useQuery({
     queryKey: ["allUsers", processingCount, filterStatus],
     queryFn: async () => {
       try {
@@ -25,10 +25,12 @@ const AllUsers = () => {
     },
   });
 
+  if (isLoading) return <Loading />
+
   const filteredUsers =
     filterStatus === "all"
-      ? users
-      : users.filter((u) => u.status === filterStatus);
+      ? request
+      : request.filter((u) => u.status === filterStatus);
 
   const handleBlock = async (id) => {
     try {
@@ -111,12 +113,13 @@ const AllUsers = () => {
           Blocked
         </button>
       </div>
+      <div className="text-3xl">Total Users: <span className="text-(--primary-color)">{filteredUsers.length}</span></div>
 
       {/* DESKTOP TABLE */}
       {filteredUsers.length === 0 && <h1>Nothing to show.</h1>}
       {filteredUsers.length > 0 && (
         <div className="hidden xl:block space-y-4">
-          <div className="grid grid-cols-7 text-center gap-x-4 py-3 text-sm text-gray-500 uppercase">
+          <div className="grid grid-cols-7 gap-x-2 text-center px-4 py-3 text-sm text-gray-500 uppercase">
             <span>Avatar</span>
             <span>Email</span>
             <span>Name</span>
@@ -130,7 +133,7 @@ const AllUsers = () => {
             {filteredUsers.map((user) => (
               <div
                 key={user._id}
-                className="grid grid-cols-7 gap-x-4 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-4"
+                className="grid grid-cols-7 gap-x-2 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
               >
                 {/* AVATAR */}
                 <img
@@ -138,11 +141,8 @@ const AllUsers = () => {
                   className="size-12 rounded-full object-cover border"
                 />
 
-                {/* EMAIL */}
-                <span>{user.email}</span>
-
-                {/* NAME */}
-                <span className="font-medium">{user.name}</span>
+                <span className="font-medium text-center">{user.name}</span>
+                <span className="text-center text-sm">{user.email}</span>
 
                 {/* ROLE */}
                 <span className="capitalize text-gray-600">

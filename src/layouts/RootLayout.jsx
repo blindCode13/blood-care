@@ -1,12 +1,18 @@
 import React from 'react';
 import NavBar from '../components/Shared/NavBar';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import Footer from '../components/Shared/Footer';
 import useAuth from '../hooks/useAuth';
 import Loading from '../components/Shared/Loading';
+import { useEffect } from 'react';
 
 const RootLayout = () => {
     const {loading} = useAuth();
+    const location = useLocation();
+
+    useEffect(() => {
+		window.scrollTo({top: 0, behavior: 'smooth'});
+	}, [location]);
 
     if (loading) return <div className='min-h-screen flex items-center'><Loading /></div>
     return (

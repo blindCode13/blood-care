@@ -15,22 +15,26 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 const AllRequests = () => {
 
   const axiosSecure = useAxiosSecure();
+  const [currentPage, setCurrentPage] = useState(0);
   const [modalShow, setModalShow] = useState(false);
 	const [processingCount, setProcessingCount] = useState(0);
   const [filterOption, setFilterOption] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 	const [currentDeleteReq, setCurrentDeleteReq] = useState("");
   const [role, isRoleLoading] = useRole();
+
   const { data: requests = {}, isLoading } = useQuery({
-    queryKey: ["requesterEmail", "donationStatus", processingCount, filterOption],
+    queryKey: ["requesterEmail", "donationStatus", processingCount, filterOption, currentPage],
     queryFn: async () => {
       try {
-              const result = await axiosSecure(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?statusFilter=${filterOption}`);
+              const result = await axiosSecure(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests?statusFilter=${filterOption}&limit=5&skip=${currentPage*5}`);
               return result.data;
             }
             catch (err) { toast.error(err.message) }
     },
   });
+
+
 
   const statusStyle = (status) => {
     switch (status) {
@@ -45,6 +49,9 @@ const AllRequests = () => {
     }
   };
 
+  const pages = !isLoading && Math.ceil(requests.count / 5);
+  console.log(pages);
+
   return (
     <>
       {
@@ -53,7 +60,7 @@ const AllRequests = () => {
     <div className="space-y-10">
       <DashboardNav title="All Donation Requests" />
 
-    <div className="mt-20">
+    <div className="mt-12">
             <label className="mb-1 font-medium text-gray-800">
               Filter by donation status:
             </label>
@@ -69,14 +76,16 @@ const AllRequests = () => {
           {
             isLoading || isRoleLoading || isProcessing && <Loading />
           }
-      {requests.length === 0 && (
+      {!isLoading && requests?.result.length === 0 && (
         <h1>No requests found.</h1>
         
       )}
-      {requests.length > 0 && (
+      {!isLoading && requests?.result.length > 0 && (
         <div className="space-y-4">
+          <div className="text-3xl">Total Requests: <span className="text-(--primary-color)">{requests.count}</span></div>
           <div className="hidden xl:block">
-            <div className="grid grid-cols-8 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase">
+            <div className="grid grid-cols-9 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase">
+              <span>Sl no</span>
               <span>Recipient</span>
               <span>Location</span>
               <span>Date</span>
@@ -88,18 +97,19 @@ const AllRequests = () => {
             </div>
 
             <div className="space-y-4">
-              {requests.map((req) => (
+              {!isLoading && requests?.result.map((req, index) => (
                 <div
                   key={req._id}
-                  className="grid grid-cols-8 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
+                  className="grid grid-cols-9 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
                 >
-                  <span className="font-medium">{req.recipientName}</span>
+                  <span className="font-medium">{(currentPage * 5) + index + 1}</span>
+                  <span className="font-medium text-center">{req.recipientName}</span>
 
-                  <span className="text-gray-700">
+                  <span className="text-gray-700 text-center">
                     {req.recipientDistrict},<br /> {req.recipientUpazila}{" "}
                   </span>
 
-                  <span>{req.donationDate}</span>
+                  <span className="text-center">{req.donationDate}</span>
                   <span>{req.donationTime}</span>
 
                   <span className="px-3 w-fit py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color) text-sm font-medium">
@@ -181,7 +191,7 @@ const AllRequests = () => {
           </div>
 
           <div className="xl:hidden space-y-5">
-            {requests.map((req) => (
+            {!isLoading && requests?.result.map((req) => (
               <div
                 key={req._id}
                 className="
@@ -312,11 +322,18 @@ const AllRequests = () => {
                   </div>
                 </div>
               </div>
-            ))}{" "}
+            ))}
           </div>
         </div>
-      )}{" "}
+      )}
     </div>
+              <div className="flex items-center justify-center gap-5 my-12">
+								{
+									Array.from({ length: pages }).map((_, index) => (
+        								<button key={index} className={`flex items-center justify-center size-12 bg-white rounded-md border-2 font-bold border-(--primary-color) cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
+      								))
+								}
+							</div>
     </>
   );
 };
