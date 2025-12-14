@@ -73,7 +73,7 @@ const AllRequests = () => {
           </div>
 
           {
-            isLoading || isRoleLoading || isProcessing && <Loading />
+            (isLoading || isRoleLoading || isProcessing) && <Loading />
           }
       {!isLoading && requests?.result.length === 0 && (
         <h1>No requests found.</h1>

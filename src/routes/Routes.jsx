@@ -47,13 +47,13 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/donation-requests/edit/:id",
-                loader: () => axios("../../src/data/location.json").then(res => res.data),
+                loader: () => axios("/location.json").then(res => res.data),
                 element: <PrivateRoute><EditDonationRequest /></PrivateRoute>
             },
             {
                 path: "/search-donors",
                 Component: SearchDonors,
-                loader: () => axios("../../src/data/location.json").then(res => res.data)
+                loader: () => axios("/location.json").then(res => res.data)
             },
             {
                 path: "/funding",
@@ -66,7 +66,7 @@ export const routes = createBrowserRouter([
     { 
         path: "/register",
         Component: Register,
-        loader: () => axios("../../src/data/location.json").then(res => res.data)
+        loader: () => axios("/location.json").then(res => res.data)
     },
     { path: "/forgot-password", Component: ForgotPassword },
     {
@@ -89,7 +89,7 @@ export const routes = createBrowserRouter([
             {
                 path: "/dashboard/create-donation-request",
                 Component: RequestDonation,
-                loader: () => axios("../../src/data/location.json").then(res => res.data)
+                loader: () => axios("/location.json").then(res => res.data)
             },
             {
                 path: "/dashboard/my-donation-requests",
@@ -109,7 +109,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: "/dashboard/profile",
-                loader: () => axios("../../src/data/location.json").then(res => res.data),
+                loader: () => axios("/location.json").then(res => res.data),
                 Component: Profile
             }
         ]

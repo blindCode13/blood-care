@@ -59,7 +59,7 @@ const MyDonations = () => {
             </select>
           </div>
           {
-            isLoading && isProcessing && <Loading />
+            (isLoading || isProcessing) && <Loading />
           }
       {!isLoading && requests?.result.length === 0 && (
         <h1>No requests found.</h1>
