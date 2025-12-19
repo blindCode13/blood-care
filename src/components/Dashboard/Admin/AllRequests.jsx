@@ -63,7 +63,10 @@ const AllRequests = () => {
             <label className="mb-1 font-medium text-gray-800">
               Filter by donation status:
             </label>
-            <select className="w-fit border border-gray-300 rounded-xl px-5 py-2 ml-4 bg-white outline-none cursor-pointer focus:border-(--primary-color)" onChange={(e) => setFilterOption(e.target.value === 'all' ? "" : e.target.value)}>
+            <select className="w-fit border border-gray-300 rounded-xl px-5 py-2 ml-4 bg-white outline-none cursor-pointer focus:border-(--primary-color)" onChange={(e) => {
+              setFilterOption(e.target.value === 'all' ? "" : e.target.value);
+              setCurrentPage(0);
+            }}>
               <option>all</option>
               <option>pending</option>
               <option>inprogress</option>
@@ -190,7 +193,7 @@ const AllRequests = () => {
           </div>
 
           <div className="xl:hidden space-y-5">
-            {!isLoading && requests?.result.map((req) => (
+            {!isLoading && requests?.result.map((req, index) => (
               <div
                 key={req._id}
                 className="
@@ -206,8 +209,8 @@ const AllRequests = () => {
                 <div className="flex justify-between items-start">
                   <div className="space-y-0.5">
                     <h4 className="text-lg font-semibold text-(--primary-color)">
-                      <span className="font-normal text-black">Recipient:</span>{" "}
-                      {req.recipientName}{" "}
+                      <span className="font-normal text-black">{(currentPage * 5) + index + 1}. Recipient:</span>
+                      {req.recipientName}
                     </h4>
 
                     <p className="text-xs mt-2 text-gray-500 line-clamp-1">
