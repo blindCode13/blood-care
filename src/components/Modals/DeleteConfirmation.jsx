@@ -10,14 +10,14 @@ const DeleteConfirmation = ({setModalShow, currentDeleteReq, processingCount, se
 	return (
 		<ModalContainer>
 			<div className="text-center">
-				<div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-(--primary-color)/10">
-					<FaTrashAlt className="text-(--primary-color) text-2xl"/>
+				<div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-primary/10">
+					<FaTrashAlt className="text-primary text-2xl"/>
 				</div>
 
-				<h2 className="text-xl font-semibold text-gray-800 mb-2">
+				<h2 className="text-xl font-semibold mb-2">
 					Delete donation request
 				</h2>
-				<p className="text-gray-600 mb-6">
+				<p className="text-primary-text/60 mb-6">
 					Are you sure you want to delete this donation request?
 				</p>
 

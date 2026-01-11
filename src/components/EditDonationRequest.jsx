@@ -63,6 +63,7 @@ const EditDonationRequest = () => {
         reset();
         setSelectedDistrict("");
         setSelectedUpazila("");
+        navigate("/dashboard");
     }
     catch (err) {
         toast.error(err.message);
@@ -74,8 +75,8 @@ const EditDonationRequest = () => {
     <>
 
       <div className="min-h-screen flex items-center justify-center py-12">
-        <div className="bg-white shadow-lg rounded-3xl px-12 py-10 w-full max-w-[700px] relative">
-            <span className="absolute top-6 left-6 text-(--primary-color) font-medium cursor-pointer hover:underline flex items-center gap-2" onClick={() => navigate(-1)}>
+        <div className="bg-primary-bg shadow-lg rounded-3xl px-12 py-10 w-full max-w-[700px] relative">
+            <span className="absolute top-6 left-6 text-primary font-medium cursor-pointer hover:underline flex items-center gap-2" onClick={() => navigate(-1)}>
                         <GoArrowLeft size={26}/>Go Back
             </span>
 
@@ -86,30 +87,30 @@ const EditDonationRequest = () => {
           <form className="space-y-6" onSubmit={handleSubmit(formSubmit)}>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Requester Name</label>
+              <label className="block mb-1 font-medium">Requester Name</label>
               <input
                 type="text"
                 readOnly
                 value={request.requesterName}
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-text/8"
               />
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Requester Email</label>
+              <label className="block mb-1 font-medium">Requester Email</label>
               <input
                 type="email"
                 readOnly
                 value={request.requesterEmail}
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-text/8"
               />
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Recipient Name</label>
+              <label className="block mb-1 font-medium">Recipient Name</label>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 placeholder="Enter recipient name"
                 defaultValue={request.recipientName}
                 required
@@ -156,10 +157,10 @@ const EditDonationRequest = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
               <div>
-                <label className="block mb-1 font-medium text-gray-800">Donation Date</label>
+                <label className="block mb-1 font-medium">Donation Date</label>
                 <input
                   type="date"
-                  className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                  className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   required
                   defaultValue={request.donationDate}
                   {...register("donationDate")}
@@ -167,10 +168,10 @@ const EditDonationRequest = () => {
               </div>
 
               <div>
-                <label className="block mb-1 font-medium text-gray-800">Donation Time</label>
+                <label className="block mb-1 font-medium">Donation Time</label>
                 <input
                   type="time"
-                  className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                  className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   required
                   defaultValue={request.donationTime}
                   {...register("donationTime")}
@@ -180,10 +181,10 @@ const EditDonationRequest = () => {
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Hospital Name</label>
+              <label className="block mb-1 font-medium">Hospital Name</label>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 placeholder="Hospital name"
                 required
                 defaultValue={request.hospitalName}
@@ -192,10 +193,10 @@ const EditDonationRequest = () => {
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Full Address</label>
+              <label className="block mb-1 font-medium">Full Address</label>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 placeholder="Full address"
                 required
                 defaultValue={request.fullAddress}
@@ -204,9 +205,9 @@ const EditDonationRequest = () => {
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Blood Group</label>
+              <label className="block mb-1 font-medium">Blood Group</label>
               <select
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none cursor-pointer focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-bg outline-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary"
                 {...register("bloodGroup")}
                 defaultValue={request.bloodGroup}
               >
@@ -222,10 +223,10 @@ const EditDonationRequest = () => {
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Request Message</label>
+              <label className="block mb-1 font-medium">Request Message</label>
               <textarea
                 placeholder="Explain why blood is needed"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none h-28 focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none h-28 focus:border-primary focus:ring-1 focus:ring-primary"
                 {...register("requestMessage")}
                 defaultValue={request.requestMessage}
               ></textarea>
@@ -251,22 +252,22 @@ const CustomDropdown = ({ label, options, selected, onSelect }) => {
 
   return (
     <div className="relative">
-      <label className="block mb-1 font-medium text-gray-800">{label}</label>
+      <label className="block mb-1 font-medium border-gray-400/50">{label}</label>
 
       <div
-        className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none cursor-pointer"
+        className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-bg outline-none cursor-pointer"
         onClick={() => setOpen(!open)}
       >
         {selected || "Select an option"}
       </div>
 
       {open && (
-        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-white border border-gray-300 rounded-xl shadow-lg z-20">
+        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-primary-bg border border-gray-400/50 rounded-xl shadow-lg z-20">
           {options.length > 0 ? (
             options.map((item) => (
               <div
                 key={item}
-                className="px-5 py-2 hover:bg-gray-100 cursor-pointer"
+                className="px-5 py-2 hover:bg-primary-text/8 cursor-pointer"
                 onClick={() => {
                   onSelect(item);
                   setOpen(false);
@@ -276,7 +277,7 @@ const CustomDropdown = ({ label, options, selected, onSelect }) => {
               </div>
             ))
           ) : (
-            <div className="px-5 py-2 text-gray-400">No options</div>
+            <div className="px-5 py-2">No options</div>
           )}
         </div>
       )}

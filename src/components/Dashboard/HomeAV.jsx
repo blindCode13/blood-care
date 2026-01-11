@@ -50,11 +50,11 @@ const HomeAV = () => {
       <div className="mt-8">
         <h2 className="text-3xl font-semibold">
           Welcome back,{" "}
-          <span className="text-(--primary-color)">
+          <span className="text-primary">
             {user?.displayName}
           </span>
         </h2>
-        <p className="text-gray-600 mt-1">
+        <p className="text-primary-text/60 mt-1">
           Here's an overview of the platform performance.
         </p>
       </div>
@@ -64,11 +64,10 @@ const HomeAV = () => {
           <div
             key={i}
             className="
-              bg-white 
+              bg-primary-bg 
               shadow-md 
               rounded-2xl 
               p-6 
-              border border-gray-100
               hover:shadow-lg 
               transition
               flex 
@@ -83,7 +82,7 @@ const HomeAV = () => {
             </div>
 
             <div>
-              <p className="text-gray-500">{item.title}</p>
+              <p className="text-primary-text/80">{item.title}</p>
               <h3 className="text-3xl font-bold mt-1">{item.count}</h3>
             </div>
           </div>

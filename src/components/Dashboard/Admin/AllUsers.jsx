@@ -81,10 +81,10 @@ const AllUsers = () => {
       {/* FILTER BUTTONS */}
       <div className="flex gap-4 mt-4">
         <button
-          className={`px-4 py-2 rounded-xl border border-(--primary-color) cursor-pointer ${
+          className={`px-4 py-2 rounded-xl border border-primary cursor-pointer ${
             filterStatus === "all"
-              ? "bg-(--primary-color) text-white"
-              : "bg-white"
+              ? "bg-primary text-white"
+              : "bg-primary-bg"
           }`}
           onClick={() => setFilterStatus("all")}
         >
@@ -92,10 +92,10 @@ const AllUsers = () => {
         </button>
 
         <button
-          className={`px-4 py-2 rounded-xl border border-(--primary-color) cursor-pointer ${
+          className={`px-4 py-2 rounded-xl border border-primary cursor-pointer ${
             filterStatus === "active"
-              ? "bg-(--primary-color) text-white"
-              : "bg-white"
+              ? "bg-primary text-white"
+              : "bg-primary-bg"
           }`}
           onClick={() => setFilterStatus("active")}
         >
@@ -103,23 +103,23 @@ const AllUsers = () => {
         </button>
 
         <button
-          className={`px-4 py-2 rounded-xl border border-(--primary-color) cursor-pointer ${
+          className={`px-4 py-2 rounded-xl border border-primary cursor-pointer ${
             filterStatus === "blocked"
               ? "bg-red-600 text-white"
-              : "bg-white"
+              : "bg-primary-bg"
           }`}
           onClick={() => setFilterStatus("blocked")}
         >
           Blocked
         </button>
       </div>
-      <div className="text-3xl">Total Users: <span className="text-(--primary-color)">{filteredUsers.length}</span></div>
+      <div className="text-3xl">Total Users: <span className="text-primary">{filteredUsers.length}</span></div>
 
       {/* DESKTOP TABLE */}
       {filteredUsers.length === 0 && <h1>Nothing to show.</h1>}
       {filteredUsers.length > 0 && (
         <div className="hidden xl:block space-y-4">
-          <div className="grid grid-cols-7 gap-x-2 text-center px-4 py-3 text-sm text-gray-500 uppercase">
+          <div className="grid grid-cols-7 gap-x-2 text-center px-4 py-3 text-sm text-primary-text/80 uppercase">
             <span>Avatar</span>
             <span>Email</span>
             <span>Name</span>
@@ -133,19 +133,19 @@ const AllUsers = () => {
             {filteredUsers.map((user) => (
               <div
                 key={user._id}
-                className="grid grid-cols-7 gap-x-2 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
+                className="grid grid-cols-7 gap-x-2 items-center justify-items-center bg-primary-bg shadow-md rounded-xl px-4 py-5"
               >
                 {/* AVATAR */}
                 <img
                   src={user.avatar}
-                  className="size-12 rounded-full object-cover border"
+                  className="size-12 rounded-full object-cover border border-primary"
                 />
 
                 <span className="font-medium text-center">{user.name}</span>
                 <span className="text-center text-sm">{user.email}</span>
 
                 {/* ROLE */}
-                <span className="capitalize text-gray-600">
+                <span className="capitalize">
                   {user.role}
                 </span>
 
@@ -184,7 +184,7 @@ const AllUsers = () => {
                   {user.role !== "volunteer" && (
                     <button
                       onClick={() => makeVolunteer(user._id)}
-                      className="text-(--primary-color) hover:text-(--primary-color) cursor-pointer"
+                      className="text-primary hover:text-primary cursor-pointer"
                     >
                       <FiUserCheck size={20} />
                     </button>
@@ -210,7 +210,7 @@ const AllUsers = () => {
         {filteredUsers.map((user) => (
           <div
             key={user._id}
-            className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm"
+            className="bg-primary-bg border border-gray-300/40 rounded-2xl p-5 shadow-sm"
           >
             <div className="flex items-center gap-4">
               <img
@@ -219,7 +219,7 @@ const AllUsers = () => {
               />
               <div>
                 <p className="text-lg font-semibold">{user.name}</p>
-                <p className="text-sm text-gray-600">{user.email}</p>
+                <p className="text-xs text-primary-text/60">{user.email}</p>
               </div>
 
               <span
@@ -233,11 +233,11 @@ const AllUsers = () => {
               </span>
             </div>
 
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-primary-text/60">
               Role: {user.role}
             </p>
 
-            <div className="flex items-center gap-6 mt-4 pt-3 border-t">
+            <div className="flex items-center gap-6 mt-4 pt-3 border-t border-gray-300/60">
               {/* BLOCK/UNBLOCK */}
               {user.status === "active" ? (
                 <button
@@ -259,7 +259,7 @@ const AllUsers = () => {
               {user.role !== "volunteer" && (
                 <button
                   onClick={() => makeVolunteer(user._id)}
-                  className="text-(--primary-color)"
+                  className="text-primary"
                 >
                   <FiUserCheck size={20} />
                 </button>

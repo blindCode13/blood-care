@@ -31,24 +31,24 @@ const DonationModal = ({
       <div>
         <form>
           <div>
-            <label className="block mb-1 font-medium text-gray-800">
+            <label className="block mb-1 font-medium">
               Name
             </label>
             <input
               type="email"
-              className="w-full border border-gray-300 bg-gray-100 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+              className="w-full border border-gray-400/50 bg-primary-text/8 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               defaultValue={user.displayName}
               disabled
             />
           </div>
 
           <div className="mt-4">
-            <label className="block mb-1 font-medium text-gray-800">
+            <label className="block mb-1 font-medium">
               Email Address
             </label>
             <input
               type="email"
-              className="w-full border border-gray-300 bg-gray-100 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+              className="w-full border border-gray-400/50 bg-primary-text/8 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               defaultValue={user.email}
               disabled
             />

@@ -78,7 +78,7 @@ const { data: userData = {}, isLoading } = useQuery({
         userData.status !== 'active' ? <h1 className='text-red-500 mt-10'>You can't create any donation request as your account is  blocked. Contact with the admin.</h1> : 
 
       <div className="min-h-screen flex items-center justify-center py-12">
-        <div className="bg-white shadow-lg rounded-3xl px-12 py-10 w-full max-w-[700px] relative">
+        <div className="bg-primary-bg shadow-lg rounded-3xl px-12 py-10 w-full max-w-[700px] relative">
 
           <h2 className="text-3xl font-bold mt-2 mb-8 text-center">
             Fill out this form
@@ -87,30 +87,30 @@ const { data: userData = {}, isLoading } = useQuery({
           <form className="space-y-6" onSubmit={handleSubmit(formSubmit)}>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Requester Name</label>
+              <label className="block mb-1 font-medium">Requester Name</label>
               <input
                 type="text"
                 readOnly
                 value={user?.displayName || ""}
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-text/8"
               />
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Requester Email</label>
+              <label className="block mb-1 font-medium">Requester Email</label>
               <input
                 type="email"
                 readOnly
                 value={user?.email || ""}
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-text/8"
               />
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Recipient Name</label>
+              <label className="block mb-1 font-medium">Recipient Name</label>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 placeholder="Enter recipient name"
                 required
                 {...register("recipientName")}
@@ -128,7 +128,7 @@ const { data: userData = {}, isLoading } = useQuery({
                       name="donorName"
                       readOnly
                       value={location.state.donorInfo.donorName}
-                      className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                      className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-bg"
                       {...register("donorName")}
                     />
                 </div>
@@ -139,7 +139,7 @@ const { data: userData = {}, isLoading } = useQuery({
                       type="text"
                       readOnly
                       value={location.state.donorInfo.donorEmail}
-                      className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                      className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-bg"
                       {...register("donorEmail")}
                     />
                 </div>
@@ -184,20 +184,20 @@ const { data: userData = {}, isLoading } = useQuery({
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
               <div>
-                <label className="block mb-1 font-medium text-gray-800">Donation Date</label>
+                <label className="block mb-1 font-medium">Donation Date</label>
                 <input
                   type="date"
-                  className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                  className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   required
                   {...register("donationDate")}
                 />
               </div>
 
               <div>
-                <label className="block mb-1 font-medium text-gray-800">Donation Time</label>
+                <label className="block mb-1 font-medium">Donation Time</label>
                 <input
                   type="time"
-                  className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                  className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   required
                   {...register("donationTime")}
                 />
@@ -206,10 +206,10 @@ const { data: userData = {}, isLoading } = useQuery({
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Hospital Name</label>
+              <label className="block mb-1 font-medium">Hospital Name</label>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 placeholder="Hospital name"
                 required
                 {...register("hospitalName")}
@@ -217,10 +217,10 @@ const { data: userData = {}, isLoading } = useQuery({
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Full Address</label>
+              <label className="block mb-1 font-medium">Full Address</label>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 placeholder="Full address"
                 required
                 {...register("fullAddress")}
@@ -228,9 +228,9 @@ const { data: userData = {}, isLoading } = useQuery({
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Blood Group</label>
+              <label className="block mb-1 font-medium">Blood Group</label>
               <select
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none cursor-pointer focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color) disabled:bg-gray-100"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-bg outline-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-gray-100"
                 defaultValue={location?.state?.donorInfo && location.state.donorInfo.bloodGroup}
                 {...register("bloodGroup", {disabled: location?.state?.donorInfo && true})}
               >
@@ -246,10 +246,10 @@ const { data: userData = {}, isLoading } = useQuery({
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Request Message</label>
+              <label className="block mb-1 font-medium">Request Message</label>
               <textarea
                 placeholder="Explain why blood is needed"
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none h-28 focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none h-28 focus:border-primary focus:ring-1 focus:ring-primary"
                 {...register("requestMessage")}
               ></textarea>
             </div>
@@ -272,22 +272,22 @@ const CustomDropdown = ({ label, options, selected, onSelect }) => {
 
   return (
     <div className="relative">
-      <label className="block mb-1 font-medium text-gray-800">{label}</label>
+      <label className="block mb-1 font-medium">{label}</label>
 
       <div
-        className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none cursor-pointer"
+        className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-bg outline-none cursor-pointer"
         onClick={() => setOpen(!open)}
       >
         {selected || "Select an option"}
       </div>
 
       {open && (
-        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-white border border-gray-300 rounded-xl shadow-lg z-20">
+        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-primary-bg border border-gray-400/50 rounded-xl shadow-lg z-20">
           {options.length > 0 ? (
             options.map((item) => (
               <div
                 key={item}
-                className="px-5 py-2 hover:bg-gray-100 cursor-pointer"
+                className="px-5 py-2 hover:bg-primary-text/8 cursor-pointer"
                 onClick={() => {
                   onSelect(item);
                   setOpen(false);

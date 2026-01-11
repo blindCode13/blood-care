@@ -44,18 +44,18 @@ const SearchDonors = () => {
   return (
     <div className="space-y-10">
 
-      <div className="bg-white shadow-lg rounded-3xl p-8 border border-gray-100 max-w-5xl mx-auto">
+      <div className="bg-primary-bg shadow-lg rounded-3xl p-8 max-w-5xl mx-auto">
 
         <div className="flex flex-col lg:flex-row gap-6">
 
           <div className="flex-1">
-            <label className="block mb-1 font-medium text-gray-800">
+            <label className="block mb-1 font-medium">
               Blood Group
             </label>
             <select
               value={bloodGroup}
               onChange={(e) => setBloodGroup(e.target.value)}
-              className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white outline-none focus:border-(--primary-color) cursor-pointer"
+              className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none cursor-pointer bg-primary-bg"
             >
               <option value="all">All</option>
               <option>A+</option><option>A-</option>
@@ -110,14 +110,14 @@ const SearchDonors = () => {
         <div className="space-y-6">
 
           {users.length === 0 && (
-            <h2 className="text-center text-gray-500">
+            <h2 className="text-center">
               No donors found.
             </h2>
           )}
 
           {users.length > 0 && (
             <div className="hidden xl:block space-y-3">
-              <div className="grid grid-cols-5 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
+              <div className="grid grid-cols-5 gap-x-5 text-center px-4 py-3 text-primary-text/80 text-sm uppercase w-full">
                 <span>Sl no</span>
                 <span>Name</span>
                 <span>Blood Group</span>
@@ -128,16 +128,16 @@ const SearchDonors = () => {
               {users.map((user, index) => (
                 <div
                   key={user._id}
-                  className="grid grid-cols-5 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
+                  className="grid grid-cols-5 gap-x-5 items-center justify-items-center bg-primary-bg shadow-md rounded-xl px-4 py-5"
                 >
                   <span className="font-medium">{index+1}</span>
                   <span className="font-medium">{user.name}</span>
 
-                  <span className="px-3 py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color)">
+                  <span className="px-3 py-1 rounded-full bg-primary/10 text-primary">
                     {user.bloodGroup}
                   </span>
 
-                  <span className="text-gray-700">
+                  <span>
                     {user.district}, {user.upazila}
                   </span>
 
@@ -157,17 +157,17 @@ const SearchDonors = () => {
             {users.map((user, index) => (
               <div
                 key={user._id}
-                className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm size-full"
+                className="bg-primary-bg border border-gray-200/30 rounded-2xl p-5 shadow-sm size-full"
               >
                 <div className="flex items-center justify-between">
                   <p className="text-lg font-semibold">{index+1}. {user.name}</p>
 
-                  <span className="inline-block mt-2 px-3 py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color)">
+                  <span className="inline-block mt-2 px-3 py-1 rounded-full bg-primary/10 text-primary">
                     {user.bloodGroup}
                   </span>
                 </div>
 
-                <p className="text-sm text-gray-600 mt-2">
+                <p className="text-sm mt-2">
                   {user.district}, {user.upazila}
                 </p>
 
@@ -195,22 +195,22 @@ const CustomDropdown = ({ label, options, selected, onSelect }) => {
 
   return (
     <div className="relative">
-      <label className="block mb-1 font-medium text-gray-800">{label}</label>
+      <label className="block mb-1 font-medium">{label}</label>
 
       <div
-        className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-white cursor-pointer"
+        className="w-full border border-gray-400/50 rounded-xl px-5 py-3 cursor-pointer"
         onClick={() => setOpen(!open)}
       >
         {selected || "All"}
       </div>
 
       {open && (
-        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-white border border-gray-300 rounded-xl shadow-lg z-20">
+        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-primary-bg border border-gray-400/50 rounded-xl shadow-lg z-20">
           {options?.length > 0 ? (
             options.map((item) => (
               <div
                 key={item}
-                className="px-5 py-2 hover:bg-gray-100 cursor-pointer"
+                className="px-5 py-2 hover:bg-primary-text/8 cursor-pointer"
                 onClick={() => {
                   onSelect(item);
                   setOpen(false);

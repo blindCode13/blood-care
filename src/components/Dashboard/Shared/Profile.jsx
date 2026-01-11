@@ -130,19 +130,19 @@ const Profile = () => {
       <DashboardNav title="My Profile" />
 
       <div className="max-w-5xl mx-auto my-10 grid grid-cols-1 lg:grid-cols-12 gap-4">
-        <div className="lg:col-span-4 bg-white rounded-3xl shadow-lg p-6 border border-gray-100 flex flex-col items-center">
+        <div className="lg:col-span-4 bg-primary-bg rounded-3xl shadow-lg p-6 border border-gray-300/40 flex flex-col items-center">
           <img
             src={user.photoURL}
-            className="w-44 h-44 rounded-full object-cover border-4 border-(--primary-color)"
+            className="w-44 h-44 rounded-full object-cover border-4 border-primary"
             referrerPolicy="no-referrer"
             alt="avatar"
           />
 
           <h2 className="text-2xl font-semibold mt-5">{user.displayName}</h2>
-          <p className="text-gray-500">{user.email}</p>
+          <p className="text-primary-text/60 text-sm">{user.email}</p>
 
           <div className="flex items-center gap-3 mt-3">
-            <span className="px-3 py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color) text-sm">
+            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
               {userData.role}
             </span>
 
@@ -171,16 +171,16 @@ const Profile = () => {
           )}
         </div>
 
-        <div className="lg:col-span-8 bg-white rounded-3xl shadow-lg p-8 border border-gray-100">
+        <div className="lg:col-span-8 bg-primary-bg rounded-3xl shadow-lg p-8 border border-gray-300/60">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Name</label>
+              <label className="block mb-1 font-medium">Name</label>
               <input
                 type="text"
                 {...register("name", { required: "Name is required" })}
                 disabled={!editMode}
-                className={`w-full border border-gray-300 rounded-xl px-5 py-3 outline-none ${
-                  editMode ? "focus:border-(--primary-color)" : "bg-gray-100"
+                className={`w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none ${
+                  editMode ? "focus:border-primary" : "bg-primary-text/8"
                 }`}
                 defaultValue={userData.name}
               />
@@ -190,26 +190,26 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Email</label>
+              <label className="block mb-1 font-medium">Email</label>
               <input
                 type="email"
                 value={userData.email}
                 readOnly
                 disabled
-                className="w-full border border-gray-300 rounded-xl px-5 py-3 bg-gray-100"
+                className="w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-text/8"
               />
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Change Avatar</label>
+              <label className="block mb-1 font-medium">Change Avatar</label>
 
               <div
-                className={`w-full border border-gray-300 rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer bg-white ${
+                className={`w-full border border-gray-400/50 rounded-xl px-4 py-3 flex items-center justify-between cursor-pointer bg-primary-bg ${
                   !editMode ? "opacity-50 pointer-events-none" : ""
                 }`}
                 onClick={() => editMode && document.getElementById("avatarInput").click()}
               >
-                <span className="text-gray-700 text-sm line-clamp-1">{avatarName}</span>
+                <span className="text-sm line-clamp-1">{avatarName}</span>
 
                 <span
                   className="px-3 py-1 rounded-lg text-sm text-white"
@@ -266,12 +266,12 @@ const Profile = () => {
             )}
 
             <div>
-              <label className="block mb-1 font-medium text-gray-800">Blood Group</label>
+              <label className="block mb-1 font-medium">Blood Group</label>
               <select
                 {...register("bloodGroup", { required: "Blood group is required" })}
                 disabled={!editMode}
-                className={`w-full border border-gray-300 rounded-xl px-5 py-3 outline-none cursor-pointer ${
-                  editMode ? "focus:border-(--primary-color)" : "bg-gray-100"
+                className={`w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none cursor-pointer ${
+                  editMode ? "focus:border-primary" : "bg-primary-text/8"
                 }`}
                 defaultValue={userData.bloodGroup}
               >
@@ -313,10 +313,10 @@ const CustomDropdown = ({ label, options, selected, onSelect, disabled }) => {
 
   return (
     <div className="relative">
-      <label className="block mb-1 font-medium text-gray-800">{label}</label>
+      <label className="block mb-1 font-medium">{label}</label>
 
       <div
-        className={`w-full border border-gray-300 rounded-xl px-5 py-3 bg-white cursor-pointer ${
+        className={`w-full border border-gray-400/50 rounded-xl px-5 py-3 bg-primary-bg cursor-pointer ${
           disabled ? "opacity-50 pointer-events-none bg-gray-100" : ""
         }`}
         onClick={() => !disabled && setOpen(!open)}
@@ -325,12 +325,12 @@ const CustomDropdown = ({ label, options, selected, onSelect, disabled }) => {
       </div>
 
       {open && (
-        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-white border border-gray-300 rounded-xl shadow-lg z-20">
+        <div className="absolute left-0 right-0 mt-2 max-h-44 overflow-y-auto bg-primary-bg border border-gray-400/50 rounded-xl shadow-lg z-20">
           {options.length > 0 ? (
             options.map((item) => (
               <div
                 key={item}
-                className="px-5 py-2 hover:bg-gray-100 cursor-pointer"
+                className="px-5 py-2 hover:bg-primary-text/8 cursor-pointer"
                 onClick={() => {
                   onSelect(item);
                   setOpen(false);

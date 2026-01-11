@@ -50,26 +50,26 @@ const DonationRequestDetails = () => {
       {
 				modalShow && <DonationModal req={req} user={user} setModalShow={setModalShow} setProcessingCount={setProcessingCount} processingCount={processingCount} revalidator={revalidator}/>
 			}
-    <div className="space-y-10">
+    <div className="space-y-6">
 
-      <div className="bg-white rounded-3xl p-8 shadow-md border border-gray-200">
+      <div className="bg-primary-bg rounded-3xl p-8 shadow-md border border-gray-300/40">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="space-y-6">
 
             <div>
-              <p className="text-sm font-medium text-gray-500">Recipient Name</p>
-              <h2 className="text-2xl font-bold text-gray-900">
+              <p className="text-sm font-medium">Recipient Name</p>
+              <h2 className="text-2xl font-bold">
                 {req.recipientName}
               </h2>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <FiMapPin className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <FiMapPin className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Location</p>
+                <p className="text-sm text-primary-text/60">Location</p>
                 <p className="text-lg font-semibold">
                   {req.recipientDistrict}, {req.recipientUpazila}
                 </p>
@@ -77,31 +77,31 @@ const DonationRequestDetails = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <FaRegHospital className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <FaRegHospital className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Hospital</p>
+                <p className="text-sm text-primary-text/60">Hospital</p>
                 <p className="text-lg font-semibold">{req.hospitalName}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <MdOutlineMyLocation className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <MdOutlineMyLocation className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Full Address</p>
+                <p className="text-sm text-primary-text/60">Full Address</p>
                 <p className="text-lg font-semibold">{req.fullAddress}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-xl bg-(--primary-color)/10 ${statusStyle(req.donationStatus)}`}>
+              <div className={`p-2 rounded-xl ${statusStyle(req.donationStatus)}`}>
                 <TbProgressHelp size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Donation Status</p>
+                <p className="text-sm text-primary-text/60">Donation Status</p>
                 <p className="text-lg font-semibold">{req.donationStatus}</p>
               </div>
             </div>
@@ -109,56 +109,56 @@ const DonationRequestDetails = () => {
 
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <FiDroplet className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <FiDroplet className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Blood Group</p>
+                <p className="text-sm text-primary-text/60">Blood Group</p>
                 <p className="text-lg font-semibold">{req.bloodGroup}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <FiCalendar className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <FiCalendar className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Donation Date</p>
+                <p className="text-sm text-primary-text/60">Donation Date</p>
                 <p className="text-lg font-semibold">{req.donationDate}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <FiClock className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <FiClock className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Donation Time</p>
+                <p className="text-sm text-primary-text/60">Donation Time</p>
                 <p className="text-lg font-semibold">{req.donationTime}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <FiUser className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <FiUser className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Requester</p>
+                <p className="text-sm text-primary-text/60">Requester</p>
                 <p className="font-semibold">{req.requesterName}</p>
-                <p className="text-gray-600 text-sm flex gap-1 items-center">
+                <p className="text-sm flex gap-1 items-center">
                   <FiMail size={14} /> {req.requesterEmail}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-(--primary-color)/10">
-                <FiUser className="text-(--primary-color)" size={24} />
+              <div className="p-2 rounded-xl bg-primary/10">
+                <FiUser className="text-primary" size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Donor info</p>
+                <p className="text-sm text-primary-text/60">Donor info</p>
                 <p className="font-semibold">{req.donorName ? req.donorName : "..."}</p>
-                <p className="text-gray-600 text-sm flex gap-1 items-center">
+                <p className="text-sm flex gap-1 items-center">
                   {
                     req.donorEmail ? <><FiMail size={14} /> {req.donorEmail}</> : "..."
                   }
@@ -170,11 +170,11 @@ const DonationRequestDetails = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-3xl p-6 shadow-md border border-gray-200">
-        <h3 className="text-xl font-semibold text-gray-900 mb-3">
+      <div className="bg-primary-bg rounded-3xl p-6 shadow-md border border-gray-300/40">
+        <h3 className="text-xl font-semibold mb-3">
           Request Message
         </h3>
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-primary-text/60 leading-relaxed">
           {req.requestMessage}
         </p>
       </div>
@@ -185,6 +185,9 @@ const DonationRequestDetails = () => {
             role === 'donor' && req.donationStatus === "pending" && req.requesterEmail !== user.email && <button className="primary-btn" onClick={() => setModalShow(true)}>Donate</button>
           }
         </div>
+          {
+            !user && <p className="text-2xl text-center">Login to Donate Blood</p>
+          }
 
     </div>
     </>

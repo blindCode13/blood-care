@@ -9,8 +9,27 @@
     font-family: "Poppins";
 }
 
-body {
-    background-color: #e94d5210;
+@theme {
+  --color-page-bg: #e94d5210;
+  --color-primary: #e94d52;
+  --color-primary-bg: #fff;
+  --color-primary-text: #000;
+}
+
+[data-theme="dark"] {
+  --color-page-bg: #2a2a2a;
+  --color-primary-bg: #212121;
+  --color-primary-text: #fff;
+}
+
+@layer base {
+  html {
+    @apply text-primary-text;
+  }
+
+  body {
+    @apply bg-page-bg;
+  }
 }
 
 .active {
@@ -22,27 +41,24 @@ body {
 
 .active-page { background-color: var(--primary-color); color: white; }
 
-.primary-btn,
-.secondery-btn {
-  padding: 8px 24px;
-  font-weight: bold;
-  border-radius: 8px;
-  border: 2px solid var(--primary-color);
-  cursor: pointer;
-  transition: 0.1s;
+
+
+@layer components {
+  .primary-btn {
+    @apply py-2 px-6 font-bold border text-white border-primary bg-primary cursor-pointer rounded-lg hover:scale-105;
+  }
+  .secondery-btn {
+    @apply py-2 px-6 font-bold border text-primary border-primary bg-primary-bg cursor-pointer rounded-lg hover:scale-105;
+  }
 }
 
-.primary-btn {
-  background-color: var(--primary-color);
-  color: #fff;
+.Toastify__toast {
+  border: 2px solid rgba(128, 128, 128, 0.382);
+  background: var(--color-primary-bg);
+  color: var(--color-primary-text);
 }
 
-.secondery-btn {
-  background-color: #fff;
-  color: var(--primary-color);
-}
-
-.primary-btn:hover,
-.secondery-btn:hover {
-  scale: 1.04;
+.Toastify__close-button {
+  color: var(--color-primary-text);
+  opacity: 0.6;
 }

@@ -48,13 +48,13 @@ const MyRequests = () => {
       {
 				modalShow && <DeleteConfirmation setModalShow={setModalShow} currentDeleteReq={currentDeleteReq} setProcessingCount={setProcessingCount} processingCount={processingCount} email={user.email}/>
 			}
-    <div className="space-y-10">
+    <div className="space-y-8">
       <DashboardNav title="My Donation Requests" />
-      <div className="mt-12">
-            <label className="mb-1 font-medium text-gray-800">
+      <div>
+            <label className="mb-1 font-medium">
               Filter by donation status:
             </label>
-            <select className="w-fit border border-gray-300 rounded-xl px-5 py-2 ml-4 bg-white outline-none cursor-pointer focus:border-(--primary-color)" onChange={(e) => {
+            <select className="w-fit border border-gray-400/50 rounded-xl px-5 py-2 ml-4 bg-primary-bg outline-none cursor-pointer focus:border-primary" onChange={(e) => {
               setFilterOption(e.target.value === 'all' ? "" : e.target.value);
               setCurrentPage(0);
             }}>
@@ -74,9 +74,9 @@ const MyRequests = () => {
       )}
       {!isLoading && requests?.result.length > 0 && (
         <div className="space-y-4">
-          <div className="text-3xl">Total Requests: <span className="text-(--primary-color)">{requests.count}</span></div>
+          <div className="text-3xl">Total Requests: <span className="text-primary">{requests.count}</span></div>
           <div className="hidden xl:block">
-            <div className="grid grid-cols-9 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase">
+            <div className="grid grid-cols-9 gap-x-5 text-center px-4 py-3 text-sm text-primary-text/80 uppercase">
               <span>Sl no</span>
               <span>Recipient</span>
               <span>Location</span>
@@ -92,23 +92,23 @@ const MyRequests = () => {
               {requests?.result.map((req, index) => (
                 <div
                   key={req._id}
-                  className="grid grid-cols-9 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5"
+                  className="grid grid-cols-9 gap-x-5 items-center justify-items-center bg-primary-bg shadow-md rounded-xl px-4 py-5"
                 >
                   <span className="font-medium">{(currentPage * 5) + index + 1}</span>
                   <span className="font-medium text-center">{req.recipientName}</span>
 
-                  <span className="text-gray-700 text-center">
+                  <span className="text-center">
                     {req.recipientDistrict},<br /> {req.recipientUpazila}{" "}
                   </span>
 
                   <span className="text-center">{req.donationDate}</span>
                   <span>{req.donationTime}</span>
 
-                  <span className="px-3 w-fit py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color) text-sm font-medium">
+                  <span className="px-3 w-fit py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
                     {req.bloodGroup}{" "}
                   </span>
 
-                  <span className="text-gray-700">
+                  <span>
                     {req.donorName ? req.donorName : "..."}
                     <br /> {req.donorEmail ? req.donorEmail : "..."}{" "}
                   </span>
@@ -139,7 +139,7 @@ const MyRequests = () => {
                     </button>
                     <Link
                       to={`/donation-requests/${req._id}`}
-                      className="text-gray-700 hover:text-black"
+                      className="text-primary-text hover:text-primary-text/60"
                     >
                       <FiEye size={22} />
                     </Link>
@@ -164,8 +164,7 @@ const MyRequests = () => {
               <div
                 key={req._id}
                 className="
-											        bg-white
-											        border border-gray-200
+											        bg-primary-bg
 											        rounded-2xl
 											        p-5
 											        shadow-sm
@@ -175,17 +174,17 @@ const MyRequests = () => {
               >
                 <div className="flex justify-between items-start">
                   <div className="space-y-0.5">
-                    <h4 className="text-lg font-semibold text-(--primary-color)">
-                      <span className="font-normal text-black">{(currentPage * 5) + index + 1}. Recipient:</span>{" "}
+                    <h4 className="text-lg font-semibold text-primary">
+                      <span className="font-normal text-primary-text">{(currentPage * 5) + index + 1}. Recipient:</span>{" "}
                       {req.recipientName}{" "}
                     </h4>
 
-                    <p className="text-xs mt-2 text-gray-500 line-clamp-1">
+                    <p className="text-xs mt-2 text-primary-text/80 line-clamp-1">
                       Location: &nbsp;
                       {req.recipientDistrict}, {req.recipientUpazila}{" "}
                     </p>
 
-                    <p className="text-xs mt-2 text-gray-500 line-clamp-1">
+                    <p className="text-xs mt-2 text-primary-text/80 line-clamp-1">
                       Donor info: &nbsp;
                       {req.donorName ? req.donorName : "..."} ,{" "}
                       {req.donorEmail ? req.donorEmail : "..."}{" "}
@@ -202,7 +201,7 @@ const MyRequests = () => {
                   </span>
                 </div>
 
-                <p className="text-gray-500 text-xs mt-2">
+                <p className="text-primary-text/80 text-xs mt-2">
                   Donation scheduled for the selected date and time.
                 </p>
 
@@ -210,8 +209,8 @@ const MyRequests = () => {
                   <span
                     className="
 													          inline-flex items-center justify-center
-													          bg-(--primary-color)/10
-													          text-(--primary-color)
+													          bg-primary/10
+													          text-primary
 													          text-xs font-semibold
 													          px-3 py-1 rounded-full
 													        "
@@ -219,11 +218,11 @@ const MyRequests = () => {
                     {req.bloodGroup}{" "}
                   </span>
 
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-primary-text/80">
                     📅 {req.donationDate}{" "}
                   </span>
 
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-primary-text/80">
                     ⏰ {req.donationTime}{" "}
                   </span>
                 </div>
@@ -231,7 +230,7 @@ const MyRequests = () => {
                 <div
                   className="
 												        flex items-center justify-between
-												        mt-4 pt-3 border-t border-gray-200
+												        mt-4 pt-3 border-t border-gray-400/50
 												      "
                 >
                   <div className="flex items-center gap-4 text-gray-600">
@@ -252,7 +251,7 @@ const MyRequests = () => {
                     </button>
                     <Link
                       to={`/donation-requests/${req._id}`}
-                      className="hover:text-black"
+                      className="text-primary-text"
                     >
                       <FiEye size={18} />
                     </Link>
@@ -267,7 +266,7 @@ const MyRequests = () => {
         <div className="flex items-center justify-center gap-5 my-12">
 								{
 									Array.from({ length: pages }).map((_, index) => (
-        								<button key={index} className={`flex items-center justify-center size-12 bg-white rounded-md border-2 font-bold border-(--primary-color) cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
+        								<button key={index} className={`flex items-center justify-center size-12 bg-primary-bg rounded-md border-2 font-bold border-primary cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
       								))
 								}
 							</div>

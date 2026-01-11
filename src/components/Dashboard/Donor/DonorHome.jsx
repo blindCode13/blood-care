@@ -46,12 +46,12 @@ const DonorHome = () => {
 			<div>
 				<h2 className="text-3xl font-semibold">
 					Welcome,{" "}
-					<span className="text-(--primary-color)">
+					<span className="text-primary">
 						{
 							user?.displayName || user?.name
 						} </span>
 				</h2>
-				<p className="text-gray-600 mt-1">
+				<p className="text-primary-text/60 mt-1">
 					Get a overview of your donation activities and requests here.
 				</p>
 			</div>
@@ -68,7 +68,7 @@ const DonorHome = () => {
 						</h3>
 
 						<div className="hidden xl:block">
-							<div className="grid grid-cols-8 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase">
+							<div className="grid grid-cols-8 gap-x-5 text-center px-4 py-3 text-sm text-primary-text/80 uppercase">
 								<span>Recipient</span>
 								<span>Location</span>
 								<span>Date</span>
@@ -85,13 +85,13 @@ const DonorHome = () => {
 										<div key={
 											req._id
 										}
-											className="grid grid-cols-8 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5">
+											className="grid grid-cols-8 gap-x-5 items-center justify-items-center bg-primary-bg shadow-md rounded-xl px-4 py-5">
 											<span className="font-medium">
 												{
 													req.recipientName
 												}</span>
 
-											<span className="text-gray-700">
+											<span>
 												{
 													req.recipientDistrict
 												},<br /> {
@@ -105,12 +105,12 @@ const DonorHome = () => {
 												req.donationTime
 											}</span>
 
-											<span className="px-3 w-fit py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color) text-sm font-medium">
+											<span className="px-3 w-fit py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
 												{
 													req.bloodGroup
 												} </span>
 
-											<span className="text-gray-700">
+											<span>
 												{
 													req.donorName ? req.donorName : "..."
 												}<br /> {
@@ -142,7 +142,7 @@ const DonorHome = () => {
 													`/donation-requests/${req._id
 													}`
 												}
-													className="text-gray-700 hover:text-black">
+													className="text-primary-text hover:text-primary-text/60">
 													<FiEye size={22} />
 												</Link>
 
@@ -159,8 +159,7 @@ const DonorHome = () => {
 										req._id
 									}
 										className="
-											bg-white
-											border border-gray-200
+											bg-primary-bg
 											rounded-2xl
 											p-5
 											shadow-sm
@@ -169,21 +168,21 @@ const DonorHome = () => {
 											">
 										<div className="flex justify-between items-start">
 											<div className="space-y-0.5">
-												<h4 className="text-lg font-semibold text-(--primary-color)">
-													<span className="font-normal text-black">Recipient:</span>
+												<h4 className="text-lg font-semibold text-primary">
+													<span className="font-normal text-primary-text">Recipient:</span>
 													{" "}
 													{
 														req.recipientName
 													} </h4>
 
-												<p className="text-xs mt-2 text-gray-500 line-clamp-1">
+												<p className="text-xs mt-2 text-primary-text/80 line-clamp-1">
 													Location: &nbsp; {
 														req.recipientDistrict
 													}, {
 														req.recipientUpazila
 													} </p>
 
-												<p className="text-xs mt-2 text-gray-500 line-clamp-1">
+												<p className="text-xs mt-2 text-primary-text/80 line-clamp-1">
 													Donor info: &nbsp; {
 														req.donorName ? req.donorName : "..."
 													}
@@ -198,7 +197,7 @@ const DonorHome = () => {
 												} </span>
 										</div>
 
-										<p className="text-gray-500 text-xs mt-2">
+										<p className="text-primary-text/80 text-xs mt-2">
 											Donation scheduled for the selected date and time.
 										</p>
 
@@ -206,8 +205,8 @@ const DonorHome = () => {
 
 											<span className="
 												inline-flex justify-center
-												bg-(--primary-color)/10
-												text-(--primary-color)
+												bg-primary/10
+												text-primary
 												text-xs font-semibold
 												px-3 py-1 rounded-full
 											">
@@ -215,12 +214,12 @@ const DonorHome = () => {
 													req.bloodGroup
 												} </span>
 
-											<span className="text-xs text-gray-500">
+											<span className="text-xs text-primary-text/80">
 												📅 {
 													req.donationDate
 												} </span>
 
-											<span className="text-xs text-gray-500">
+											<span className="text-xs text-primary-text/80">
 												⏰ {
 													req.donationTime
 												} </span>
@@ -228,7 +227,7 @@ const DonorHome = () => {
 
 										<div className="
 																				        flex items-center justify-between
-																				        mt-4 pt-3 border-t border-gray-200
+																				        mt-4 pt-3 border-t border-gray-400/50
 																				      ">
 
 											<div className="flex items-center gap-4 text-gray-600">
@@ -251,7 +250,7 @@ const DonorHome = () => {
 													`/donation-requests/${req._id
 													}`
 												}
-													className="hover:text-black">
+													className="text-primary-text">
 													<FiEye size={18} />
 												</Link>
 												</div>

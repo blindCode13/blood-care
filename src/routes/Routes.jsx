@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import axios from 'axios';
 import RootLayout from "../layouts/RootLayout";
-import Home from "../pages/Home/Home";
 import Funding from "../pages/Funding";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
@@ -24,6 +23,7 @@ import SearchDonors from "../pages/SearchDonors";
 import PaymentSuccess from "../pages/PaymentSuccess";
 import ErrorElement from "../components/ErrorElement";
 import NotFound from "../components/Notfound";
+import Home from "../pages/Home";
 
 export const routes = createBrowserRouter([
     {
@@ -43,7 +43,7 @@ export const routes = createBrowserRouter([
                 path: "/donation-requests/:id",
                 loader: ({params}) => axios(`${import.meta.env.VITE_SERVER_API_URL}/donation-requests/${params.id}`).then(res => res.data),
                 hydrateFallbackElement: <Loading />,
-                element: <PrivateRoute><DonationRequestDetails /></PrivateRoute>
+                element: <DonationRequestDetails />
             },
             {
                 path: "/donation-requests/edit/:id",
@@ -81,6 +81,7 @@ export const routes = createBrowserRouter([
     {
         path: "/dashboard",
         element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+        errorElement: <ErrorElement />,
         children: [
             {
                 index: true,

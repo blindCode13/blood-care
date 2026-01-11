@@ -5,10 +5,12 @@ import Footer from '../components/Shared/Footer';
 import useAuth from '../hooks/useAuth';
 import Loading from '../components/Shared/Loading';
 import { useEffect } from 'react';
+import { useApplyTheme } from '../hooks/useApplyTheme';
 
 const RootLayout = () => {
     const {loading} = useAuth();
     const location = useLocation();
+    useApplyTheme();
 
     useEffect(() => {
 		window.scrollTo({top: 0, behavior: 'smooth'});

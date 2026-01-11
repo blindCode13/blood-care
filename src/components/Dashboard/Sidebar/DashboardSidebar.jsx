@@ -24,8 +24,8 @@ const DashboardSidebar = () => {
             modalShow && <LogoutConfirmation setModalShow={setModalShow} logOut={logOut}></LogoutConfirmation>
         }
         <div className="
-            h-screen bg-white shadow-lg flex flex-col fixed left-0 top-0 z-50
-            w-20 md:w-64
+            h-screen bg-primary-bg shadow-lg flex flex-col fixed left-0 md:translate-x-0 top-0 z-50
+            w-18 md:w-64
         ">
             
             <div
@@ -37,7 +37,7 @@ const DashboardSidebar = () => {
                 <h1 className="font-bold text-2xl hidden md:block">Blood Care</h1>
             </div>
 
-            <div className="flex-1 px-2 md:px-4 py-6 space-y-2 border-t border-gray-300 mt-4">
+            <div className="flex-1 px-2 md:px-4 py-6 space-y-2 border-t border-gray-300/60 mt-4">
 
                 <NavLink
                     to="/dashboard"
@@ -45,7 +45,7 @@ const DashboardSidebar = () => {
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
                         justify-center md:justify-start
-                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                        ${isActive ? "bg-primary text-white" : "hover:bg-primary/10"}`
                     }
                 >
                     <FiGrid size={22} />
@@ -60,7 +60,7 @@ const DashboardSidebar = () => {
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
                         justify-center md:justify-start
-                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                        ${isActive ? "bg-primary text-white" : "hover:bg-primary/10"}`
                     }
                 >
                     <FiUsers size={22} />
@@ -72,7 +72,7 @@ const DashboardSidebar = () => {
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
                         justify-center md:justify-start
-                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                        ${isActive ? "bg-primary text-white" : "hover:bg-primary/10"}`
                     }
                 >
                     <FiFileText size={22} />
@@ -84,7 +84,7 @@ const DashboardSidebar = () => {
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
                         justify-center md:justify-start
-                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                        ${isActive ? "bg-primary text-white" : "hover:bg-primary/10"}`
                     }
                 >
                     <LuFileUser size={22} />
@@ -100,7 +100,7 @@ const DashboardSidebar = () => {
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
                         justify-center md:justify-start
-                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                        ${isActive ? "bg-primary text-white" : "hover:bg-primary/10"}`
                     }
                 >
                     <PiUsersThree size={24} />
@@ -115,7 +115,7 @@ const DashboardSidebar = () => {
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition
                         justify-center md:justify-start
-                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                        ${isActive ? "bg-primary text-white" : "hover:bg-primary/10"}`
                     }
                 >
                     <FiFileText size={22} />
@@ -125,14 +125,14 @@ const DashboardSidebar = () => {
 
             </div>
 
-            <div className="px-2 md:px-4 pb-6 space-y-2 border-t border-gray-300">
+            <div className="px-2 md:px-4 pb-6 space-y-2 border-t border-gray-300/60">
 
                 <NavLink
                     to="/dashboard/profile"
                     className={({ isActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition mt-2
                         justify-center md:justify-start
-                        ${isActive ? "bg-(--primary-color) text-white" : "hover:bg-(--primary-color)/10"}`
+                        ${isActive ? "bg-primary text-white" : "hover:bg-primary/10"}`
                     }
                 >
                     <FaRegUser size={22} />
@@ -141,7 +141,7 @@ const DashboardSidebar = () => {
 
                 <button
                     className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer
-                    hover:bg-(--primary-color)/10 w-full text-left justify-center md:justify-start"
+                    hover:bg-primary/10 w-full text-left justify-center md:justify-start"
                     onClick={() => setModalShow(true)}
                 >
                     <FiLogOut size={22} />

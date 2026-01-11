@@ -5,6 +5,8 @@ import Loading from "../components/Shared/Loading";
 import { useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
 const DonationRequests = () => {
 	const navigate = useNavigate();
@@ -35,7 +37,7 @@ const DonationRequests = () => {
 				requests.result.length > 0 && (
 					<div className="space-y-4">
 						<div className="hidden xl:block">
-							<div className="grid grid-cols-9 gap-x-5 text-center px-4 py-3 text-sm text-gray-500 uppercase w-full">
+							<div className="grid grid-cols-9 gap-x-5 text-center px-4 py-3 text-sm text-primary-text/80 uppercase w-full">
 								<span>sl no</span>
 								<span>Recipient</span>
 								<span>Location</span>
@@ -53,7 +55,7 @@ const DonationRequests = () => {
 										<div key={
 											req._id
 										}
-											className={`grid grid-cols-9 gap-x-5 items-center justify-items-center bg-white shadow-md rounded-xl px-4 py-5 ${req.requesterEmail === user?.email ? 'border-l-8 border-amber-200' : ''}`}>
+											className={`grid grid-cols-9 gap-x-5 items-center justify-items-center bg-primary-bg shadow-md rounded-xl px-4 py-5 ${req.requesterEmail === user?.email ? 'border-l-8 border-amber-200' : ''}`}>
 												<span className="font-medium">
 												{
 													(currentPage * 5) + index + 1
@@ -63,7 +65,7 @@ const DonationRequests = () => {
 													req.recipientName
 												}</span>
 
-											<span className="text-gray-700 text-center">
+											<span className="text-center">
 												{
 													req.recipientDistrict
 												},<br /> {
@@ -77,12 +79,12 @@ const DonationRequests = () => {
 												req.donationTime
 											}</span>
 
-											<span className="px-3 w-fit py-1 rounded-full bg-(--primary-color)/10 text-(--primary-color) text-sm font-medium">
+											<span className="px-3 w-fit py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
 												{
 													req.bloodGroup
 												} </span>
 
-											<span className="text-gray-700">
+											<span>
 												{
 													req.donorName ? req.donorName : "..."
 												}<br /> {
@@ -107,8 +109,8 @@ const DonationRequests = () => {
 										req._id
 									}
 										className="
-											bg-white
-											border border-gray-200
+											bg-primary-bg
+											border border-gray-200/30
 											rounded-2xl
 											p-5
 											shadow-sm
@@ -117,21 +119,21 @@ const DonationRequests = () => {
 											">
 										<div className="flex justify-between items-start">
 											<div className="space-y-0.5">
-												<h4 className="text-lg font-semibold text-(--primary-color)">
-													<span className="font-normal text-black">{(currentPage * 5) + index + 1}. Recipient:</span>
+												<h4 className="text-lg font-semibold text-primary">
+													<span className="font-normal text-primary-text">{(currentPage * 5) + index + 1}. Recipient:</span>
 													{" "}
 													{
 														req.recipientName
 													} </h4>
 
-												<p className="text-xs mt-2 text-gray-500 line-clamp-1">
+												<p className="text-xs mt-2 text-primary-text/80 line-clamp-1">
 													Location: &nbsp; {
 														req.recipientDistrict
 													}, {
 														req.recipientUpazila
 													} </p>
 
-												<p className="text-xs mt-2 text-gray-500 line-clamp-1">
+												<p className="text-xs mt-2 text-primary-text/80 line-clamp-1">
 													Donor info: &nbsp; {
 														req.donorName ? req.donorName : "..."
 													}
@@ -146,7 +148,7 @@ const DonationRequests = () => {
 												} </span>
 										</div>
 
-										<p className="text-gray-500 text-xs mt-2">
+										<p className="text-primary-text/80 text-xs mt-2">
 											Donation scheduled for the selected date and time.
 										</p>
 
@@ -154,8 +156,8 @@ const DonationRequests = () => {
 
 											<span className="
 												inline-flex justify-center
-												bg-(--primary-color)/10
-												text-(--primary-color)
+												bg-primary/10
+												text-primary
 												text-xs font-semibold
 												px-3 py-1 rounded-full
 											">
@@ -163,18 +165,18 @@ const DonationRequests = () => {
 													req.bloodGroup
 												} </span>
 
-											<span className="text-xs text-gray-500">
+											<span className="text-xs text-primary-text/80">
 												📅 {
 													req.donationDate
 												} </span>
 
-											<span className="text-xs text-gray-500">
+											<span className="text-xs text-primary-text/80">
 												⏰ {
 													req.donationTime
 												} </span>
 										</div>
 
-										<div className="flex mt-4 pt-3 border-t border-gray-200">
+										<div className="flex mt-4 pt-3 border-t border-gray-200/60">
 											<button className="primary-btn" onClick={() => navigate(`/donation-requests/${req._id}`)}>View</button>
 										</div>
 									</div>
@@ -184,12 +186,14 @@ const DonationRequests = () => {
 				)
 			}
 				<div className="flex items-center justify-center gap-5 my-12 flex-wrap">
+					<button className="flex items-center justify-center text-3xl text-primary bg-primary-bg rounded-full size-16 cursor-pointer hover:scale-110 transition border border-primary disabled:text-primary/40" disabled={currentPage === 0} onClick={() => setCurrentPage(currentPage - 1)}><FaArrowLeft /></button>
 								{
 									Array.from({ length: pages }).map((_, index) => (
-        								<button key={index} className={`flex items-center justify-center size-12 bg-white rounded-md border-2 font-bold border-(--primary-color) cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
+        								<button key={index} className={`flex items-center justify-center size-12 bg-primary-bg rounded-md border-2 font-bold border-primary cursor-pointer ${index === currentPage && 'active-page'}`} onClick={() => setCurrentPage(index)}>{index + 1}</button>
       								))
 								}
-							</div>
+								<button className="flex items-center justify-center text-3xl text-primary bg-primary-bg rounded-full size-16 cursor-pointer hover:scale-110 transition border border-primary disabled:text-primary/40" disabled={currentPage === pages - 1} onClick={() => setCurrentPage(currentPage + 1)}><FaArrowRight /></button>
+					</div>
 			
 			 </div>
 	);

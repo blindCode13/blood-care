@@ -29,29 +29,29 @@ const ForgotPassword = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
-      <div className="bg-white shadow-lg rounded-3xl px-12 py-10 w-full max-w-[500px] relative">
-        <span className="absolute top-6 left-6 text-(--primary-color) font-medium cursor-pointer hover:underline flex items-center gap-2" onClick={() => navigate(-1)}>
+      <div className="bg-primary-bg shadow-lg rounded-3xl px-12 py-10 w-full max-w-[500px] relative">
+        <span className="absolute top-6 left-6 text-primary font-medium cursor-pointer hover:underline flex items-center gap-2" onClick={() => navigate(-1)}>
             <GoArrowLeft size={26}/>
                 Go Back
         </span>
 
         <div className="flex flex-col items-center mt-6 mb-6">
-          <div className="flex items-center justify-center p-6 rounded-full bg-(--primary-color)/20">
+          <div className="flex items-center justify-center p-6 rounded-full bg-primary/20">
             <FiKey size={48} color="var(--primary-color)" />
           </div>
           <h2 className="text-3xl font-bold mt-3 text-center">Forgot Password?</h2>
-          <p className="text-gray-600 text-sm mt-1 text-center">
+          <p className="text-primary-text/60 text-sm mt-1 text-center">
             Enter your email and we’ll send you a reset link.
           </p>
         </div>
 
         <form className="space-y-6" onSubmit={handleFormSubmit}>
           <div>
-            <label className="block mb-1 font-medium text-gray-800">Email Address</label>
+            <label className="block mb-1 font-medium">Email Address</label>
             <input
               type="email"
               name="email"
-              className="w-full border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-(--primary-color) focus:ring-1 focus:ring-(--primary-color)"
+              className="w-full border border-gray-400/50 rounded-xl px-5 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               placeholder="yourname@example.com"
               required
               defaultValue={location.state ? location.state : ""}
